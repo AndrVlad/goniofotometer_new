@@ -1,0 +1,3 @@
+PC_Communication.c:10:6:checkCRC_PCData	1
+PC_Communication.c:14:6:setErrorResponse	1
+PC_Communication.c:18:6:parserCMD	2
