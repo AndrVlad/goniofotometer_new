@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Common.h"
+#include "FSMGonio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -159,9 +160,6 @@ int main(void)
   {
 	HAL_IWDG_Refresh(&hiwdg);
 	// handle of message from PC
-	if (uart3_rx_complete) {
-		parserCMD();
-	}
 
 	dispatchFSMGlobal();
 

@@ -10,8 +10,12 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include "stm32f7xx_hal.h"
 
 
 extern bool uart1_rx_complete, uart3_rx_complete, spi3_rx_complete, spi4_rx_complete;
+
+extern SPI_HandleTypeDef hspi3;
+extern TIM_HandleTypeDef htim11;
 
 #endif /* INC_COMMON_H_ */

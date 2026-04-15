@@ -5,9 +5,8 @@
  *      Author: Admin
  */
 #include "Common.h"
-#include "main.h"
 
-bool checkCRC_PCData() {
+bool checkCRC() {
 	return true;
 };
 
@@ -17,7 +16,7 @@ void setErrorResponse() {
 
 void parserCMD() {
 
-	  if (!checkCRC_PCData()) {
+	  if (!checkCRC()) {
 		  setErrorResponse();
 		  return;
 	  }

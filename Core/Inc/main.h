@@ -53,8 +53,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-extern SPI_HandleTypeDef hspi3;
-extern TIM_HandleTypeDef htim11;
+
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
