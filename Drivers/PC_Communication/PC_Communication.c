@@ -5,8 +5,11 @@
  *      Author: Admin
  */
 #include "Common.h"
+#include "PC_Communication.h"
 
-bool checkCRC() {
+uint8_t cmd_buf[33] = {0};
+
+bool checkCRC(uint8_t* buf) {
 	return true;
 };
 
@@ -16,12 +19,16 @@ void setErrorResponse() {
 
 void parserCMD() {
 
-	  if (!checkCRC()) {
+	  if (!checkCRC(cmd_buf)) {
 		  setErrorResponse();
 		  return;
 	  }
 
 	  __HAL_TIM_SET_COUNTER(&htim11, 0);
+
+	  switch(cmd_buf[0]) {
+
+	  }
 
 
 

@@ -18,6 +18,15 @@ enum FSMGlobalState {
 	TEST_ROTATION_STATE
 };
 
+enum FSMActionState {
+	NONE_ACTION,
+	ACCELERATION,
+	MOVING,
+	POLL_PD,
+	DECELERATION,
+	COEFF_SETTING
+};
+
 void dispatchFSMGlobal();
 void setFSMGlobalState(uint8_t state);
 
