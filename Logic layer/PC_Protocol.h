@@ -1,6 +1,9 @@
 #ifndef PC_PROTOCOL_H
 #define PC_PROTOCOL_H
 
+#define RESPONSE_FRAME_LEN 			33
+#define CMD_FRAME_LEN 				6
+
 #define CRC_ERROR 					0x0
 #define GET_STATUS 					0x1
 #define EQUATORIAL_MEASUREMENT		0x2

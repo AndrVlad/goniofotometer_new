@@ -5,4 +5,6 @@
  *      Author: vlado
  */
 
+#include "Motor.h"
 
+motor_t h_motor, v_motor;
