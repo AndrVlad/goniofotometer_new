@@ -1,2 +1,0 @@
-../Core/Src/FSMGonio.c:13:6:setFSMGlobalState	16	static
-../Core/Src/FSMGonio.c:17:6:dispatchFSMGlobal	8	static

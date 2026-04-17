@@ -1,3 +1,0 @@
-PC_Communication.c:9:6:checkCRC	1
-PC_Communication.c:13:6:setErrorResponse	1
-PC_Communication.c:17:6:parserCMD	2

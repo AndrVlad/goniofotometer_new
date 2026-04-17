@@ -7,6 +7,8 @@
 
 #include "Common.h"
 #include "FSMGonio.h"
+#include "MeasurementController.h"
+#include "PC_Protocol.h"
 
 enum FSMGlobalState curStateGlobal = INIT_STATE;
 enum FSMActionState curActionState = NONE_ACTION;
@@ -28,7 +30,7 @@ void dispatchFSMGlobal() {
 		}
 
 		if (uart3_rx_complete) {
-			urart3_rx_complete = 0;
+			uart3_rx_complete = 0;
 			parserCMD();
 		}
 
@@ -49,7 +51,6 @@ void dispatchFSMGlobal() {
 		}
 
 		dispatchDynamicMeasurement();
-
 		break;
 	case STATIC_MEASUREMENT_STATE:
 
@@ -171,6 +172,6 @@ void dispatchDynamicMeasurement() {
 		}
 		break;
 	}
-};
+}
 
 

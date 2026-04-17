@@ -1,3 +1,0 @@
-../Drivers/PC_Communication/PC_Communication.c:9:6:checkCRC	4	static
-../Drivers/PC_Communication/PC_Communication.c:13:6:setErrorResponse	4	static
-../Drivers/PC_Communication/PC_Communication.c:17:6:parserCMD	8	static
