@@ -15,6 +15,10 @@ void setFSMGlobalState(uint8_t state) {
 	curStateGlobal = state;
 }
 
+void setFSMActionState(uint8_t state) {
+	curActionState = state;
+}
+
 void dispatchFSMGlobal() {
 	switch(curStateGlobal) {
 	case IDLE_STATE:
@@ -24,6 +28,7 @@ void dispatchFSMGlobal() {
 		}
 
 		if (uart3_rx_complete) {
+			urart3_rx_complete = 0;
 			parserCMD();
 		}
 
@@ -35,7 +40,7 @@ void dispatchFSMGlobal() {
 	case DYNAMIC_MEASUREMENT_STATE:
 
 		if (uart3_rx_complete) {
-			urart3_rx_complete = 0;
+			uart3_rx_complete = 0;
 			parserCMD();
 		}
 
@@ -47,6 +52,16 @@ void dispatchFSMGlobal() {
 
 		break;
 	case STATIC_MEASUREMENT_STATE:
+
+		if (uart3_rx_complete) {
+			uart3_rx_complete = 0;
+			parserCMD();
+		}
+
+		if (spi3_rx_complete || spi4_rx_complete) {
+			spi3_rx_complete = spi4_rx_complete = 0;
+		}
+
 		dispatchStaticMeasurement();
 		break;
 	case ERROR_STATE:
@@ -66,7 +81,15 @@ void dispatchFSMGlobal() {
 		break;
 	case CALIBRATION_STATE:
 
+		if (uart3_rx_complete) {
+			parserCMD();
+		}
 
+		if (spi3_rx_complete || spi4_rx_complete) {
+			spi3_rx_complete = spi4_rx_complete = 0;
+		}
+
+		dispatchCalibration();
 
 		break;
 	case TEST_ROTATION_STATE:
@@ -94,7 +117,7 @@ void dispatchTestRotation() {
 	case ACCELERATION:
 		handleTestRotation(); // осуществляет останов и смену состояний.
 		if (isMotorAccelerated(motor)) {
-			setFSMGlobalState(MOVING);
+			setFSMActionState(MOVING);
 		} else {
 			if (tim4_ovflw) {
 				tim4_ovflw = 0;
@@ -105,14 +128,21 @@ void dispatchTestRotation() {
 	case MOVING:
 		break;
 		handleTestRotation();
+	case DECELERATION:
+		if (isMotorStopped(motor)) {
+			setFSMGlobalState(IDLE_STATE);
+			setFSMActionState(NONE_ACTION);
+		}
+		break;
 	}
+
 }
 
 void dispatchDynamicMeasurement() {
 	switch (curActionState) {
 	case ACCELERATION:
 		if (isMotorAccelerated(motor)) {
-			setFSMGlobalState(MOVING);
+			setFSMActionState(MOVING);
 		} else {
 			if (tim4_ovflw) {
 				tim4_ovflw = 0;
@@ -132,6 +162,7 @@ void dispatchDynamicMeasurement() {
 	case DECELERATION:
 		if (isMotorStopped(motor)) {
 			setFSMGlobalState(IDLE_STATE);
+			setFSMActionState(NONE_ACTION);
 		} else {
 			if (tim12_ovflw) {
 				tim12_ovflw = 0;
