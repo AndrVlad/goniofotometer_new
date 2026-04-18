@@ -12,6 +12,8 @@
 
 void dispatchDynamicMeasurement();
 void dispatchStaticMeasurement();
+void dispatchCalibration();
+void handleTestRotation();
 
 enum FSMGlobalState curStateGlobal = INIT_STATE;
 enum FSMActionState curActionState = NONE_ACTION;
@@ -120,7 +122,7 @@ void dispatchTestRotation() {
 	switch (curActionState) {
 	case ACCELERATION:
 		handleTestRotation(); // осуществляет останов и смену состояний.
-		if (isMotorAccelerated()) {
+		if (isPlatformAccelerated()) {
 			setFSMActionState(MOVING);
 		} else {
 			if (tim4_ovflw) {
@@ -133,7 +135,7 @@ void dispatchTestRotation() {
 		break;
 		handleTestRotation();
 	case DECELERATION:
-		if (isMotorStopped()) {
+		if (isPlatformStopped()) {
 			setFSMGlobalState(IDLE_STATE);
 			setFSMActionState(NONE_ACTION);
 		}
@@ -177,4 +179,15 @@ void dispatchDynamicMeasurement() {
 	}
 }
 
+void dispatchStaticMeasurement() {
+	return;
+}
+
+void dispatchCalibration() {
+	return;
+}
+
+void handleTestRotation() {
+	return;
+}
 

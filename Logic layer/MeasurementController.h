@@ -1,4 +1,5 @@
-
+#ifndef MEASUREMENT_CONTROLLER_H
+#define MEASUREMENT_CONTROLLER_H
 #include "Platform.h"
 
 #define ACCEL_OFFSET 5
@@ -19,7 +20,9 @@ typedef struct {
 } measurement_t;
 
 void handleDynamicMeasurement();
-void initDynamicMeasurement();
+void initDynamicMeasurement(enum meas_type_t meas_type, uint16_t start_angle_item, uint16_t end_angle_item, uint16_t step_item);
 void handleStaticMeasurement();
 void initStaticMeasurement();
 void setActivePlatform(uint8_t platf_id);
+
+#endif

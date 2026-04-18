@@ -11,8 +11,6 @@
 #define STATIC_MEASUREMENT 			0x5
 #define ACTIVE_HORIZONTAL_PLATFORM	0xA
 
-
-
 void parserCMD();
 
-#endif /* PC_COMMUNICATION_PC_COMMUNICATION_H_ */
+#endif

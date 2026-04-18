@@ -5,4 +5,6 @@
  *      Author: Admin
  */
 
+uint8_t* getPCCommand();
+
 

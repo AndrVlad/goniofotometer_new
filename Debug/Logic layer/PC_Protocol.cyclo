@@ -1,0 +1,6 @@
+PC_Protocol.c:36:6:checkCRC	1
+PC_Protocol.c:40:6:calculateCRC	1
+PC_Protocol.c:44:6:setErrorResponse	1
+PC_Protocol.c:48:6:stopUpdatePDData	1
+PC_Protocol.c:52:6:sendResponseOnCMD	1
+PC_Protocol.c:56:6:parserCMD	5

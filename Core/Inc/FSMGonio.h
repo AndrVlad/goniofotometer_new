@@ -8,6 +8,8 @@
 #ifndef INC_FSMGONIO_H_
 #define INC_FSMGONIO_H_
 
+#include <stdint.h>
+
 enum FSMGlobalState {
 	INIT_STATE,
 	IDLE_STATE,

@@ -1,0 +1,6 @@
+MeasurementController.c:24:6:setActivePlatform	2
+MeasurementController.c:33:10:calculateEncPosition	1
+MeasurementController.c:38:6:handleDynamicMeasurement	1
+MeasurementController.c:43:6:initDynamicMeasurement	6
+MeasurementController.c:97:6:handleStaticMeasurement	1
+MeasurementController.c:100:6:initStaticMeasurement	1

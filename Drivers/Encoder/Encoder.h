@@ -10,6 +10,8 @@
 #ifndef ENCODER_ENCODER_H_
 #define ENCODER_ENCODER_H_
 
+#define ENCODER_RESOLUTION 131071
+
 typedef struct  {
 	uint32_t cur_value;
 	uint32_t inv_value;
