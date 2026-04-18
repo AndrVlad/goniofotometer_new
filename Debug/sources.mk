@@ -29,5 +29,6 @@ Drivers/Motor \
 Drivers/PC_Communication \
 Drivers/Photodetector \
 Drivers/STM32F7xx_HAL_Driver/Src \
+Drivers/Timer \
 Logic\ layer \
 

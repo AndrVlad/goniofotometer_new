@@ -2,7 +2,7 @@
 #define PLATFORM_H
 
 #include <stdint.h>
-
+#include <stdbool.h>
 #include "Encoder.h"
 #include "Motor.h"
 
@@ -20,4 +20,8 @@ void setCurrentPlatform(platform_t* platform);
 void setPlatformDirection(uint32_t target_position);
 void startPlatformRotation();
 
+void acceleratePlatform();
+bool isPlatformStopped();
+bool isPlatformAccelerated();
+void deceleratePlatform();
 #endif

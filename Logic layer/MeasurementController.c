@@ -100,3 +100,7 @@ void handleStaticMeasurement() {
 void initStaticMeasurement() {
 	return;
 }
+
+void savePhotodetectorData() {
+	return;
+};

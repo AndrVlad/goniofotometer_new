@@ -7,4 +7,9 @@
 #include "Common.h"
 #include "PC_Communication.h"
 
+uint8_t uart3_rx_buf[6] = {0};
 
+uint8_t* getPCCommand() {
+
+	return uart3_rx_buf;
+}

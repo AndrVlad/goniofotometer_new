@@ -9,6 +9,7 @@
 #include "FSMGonio.h"
 #include "MeasurementController.h"
 #include "PC_Protocol.h"
+#include "Platform.h"
 
 void dispatchDynamicMeasurement();
 void dispatchStaticMeasurement();
@@ -127,7 +128,7 @@ void dispatchTestRotation() {
 		} else {
 			if (tim4_ovflw) {
 				tim4_ovflw = 0;
-				accelerateMotor();
+				acceleratePlatform();
 			}
 		}
 		break;
@@ -147,12 +148,12 @@ void dispatchTestRotation() {
 void dispatchDynamicMeasurement() {
 	switch (curActionState) {
 	case ACCELERATION:
-		if (isMotorAccelerated()) {
+		if (isPlatformAccelerated()) {
 			setFSMActionState(MOVING);
 		} else {
 			if (tim4_ovflw) {
 				tim4_ovflw = 0;
-				accelerateMotor();
+				acceleratePlatform();
 			}
 		}
 		break;
@@ -166,13 +167,13 @@ void dispatchDynamicMeasurement() {
 		handleDynamicMeasurement();
 		break;
 	case DECELERATION:
-		if (isMotorStopped()) {
+		if (isPlatformStopped()) {
 			setFSMGlobalState(IDLE_STATE);
 			setFSMActionState(NONE_ACTION);
 		} else {
 			if (tim12_ovflw) {
 				tim12_ovflw = 0;
-				decelerateMotor();
+				deceleratePlatform();
 			}
 		}
 		break;

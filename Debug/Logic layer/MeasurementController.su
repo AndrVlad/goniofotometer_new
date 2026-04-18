@@ -4,3 +4,4 @@
 ../Logic layer/MeasurementController.c:43:6:initDynamicMeasurement	32	static
 ../Logic layer/MeasurementController.c:97:6:handleStaticMeasurement	4	static
 ../Logic layer/MeasurementController.c:100:6:initStaticMeasurement	4	static
+../Logic layer/MeasurementController.c:104:6:savePhotodetectorData	4	static

@@ -2,6 +2,7 @@
 #include "PC_Protocol.h"
 #include "MeasurementController.h"
 #include "PC_Communication.h"
+#include "Timer.h"
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -31,7 +32,6 @@ uint8_t* cmd_buf_ptr = NULL;
 uint8_t response_buf[RESPONSE_FRAME_LEN];
 enum status_current_action_t cur_action;
 enum work_status_t work_status;
-
 
 bool checkCRC(uint8_t* buf) {
 	return true;

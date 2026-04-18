@@ -24,5 +24,6 @@ void initDynamicMeasurement(enum meas_type_t meas_type, uint16_t start_angle_ite
 void handleStaticMeasurement();
 void initStaticMeasurement();
 void setActivePlatform(uint8_t platf_id);
+void savePhotodetectorData();
 
 #endif
