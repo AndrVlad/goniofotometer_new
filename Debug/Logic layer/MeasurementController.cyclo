@@ -5,3 +5,5 @@ MeasurementController.c:43:6:initDynamicMeasurement	6
 MeasurementController.c:97:6:handleStaticMeasurement	1
 MeasurementController.c:100:6:initStaticMeasurement	1
 MeasurementController.c:104:6:savePhotodetectorData	1
+MeasurementController.c:108:6:isPlatformReachStartPosition	1
+MeasurementController.c:112:6:isPlatformReachEndPosition	1

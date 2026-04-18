@@ -5,3 +5,5 @@
 ../Logic layer/MeasurementController.c:97:6:handleStaticMeasurement	4	static
 ../Logic layer/MeasurementController.c:100:6:initStaticMeasurement	4	static
 ../Logic layer/MeasurementController.c:104:6:savePhotodetectorData	4	static
+../Logic layer/MeasurementController.c:108:6:isPlatformReachStartPosition	4	static
+../Logic layer/MeasurementController.c:112:6:isPlatformReachEndPosition	4	static

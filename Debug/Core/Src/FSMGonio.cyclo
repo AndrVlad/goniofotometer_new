@@ -2,7 +2,7 @@ FSMGonio.c:22:6:setFSMGlobalState	1
 FSMGonio.c:26:6:setFSMActionState	1
 FSMGonio.c:30:6:dispatchFSMGlobal	28
 FSMGonio.c:122:6:dispatchTestRotation	7
-FSMGonio.c:148:6:dispatchDynamicMeasurement	11
-FSMGonio.c:183:6:dispatchStaticMeasurement	1
-FSMGonio.c:187:6:dispatchCalibration	1
-FSMGonio.c:191:6:handleTestRotation	1
+FSMGonio.c:148:6:dispatchDynamicMeasurement	12
+FSMGonio.c:191:6:dispatchStaticMeasurement	1
+FSMGonio.c:195:6:dispatchCalibration	1
+FSMGonio.c:199:6:handleTestRotation	1

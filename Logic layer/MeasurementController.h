@@ -6,7 +6,8 @@
 
 enum meas_type_t {
 	EQUATORIAL,
-	MERIDIONAL
+	MERIDIONAL,
+	TEST,
 };
 
 typedef struct {
@@ -25,5 +26,7 @@ void handleStaticMeasurement();
 void initStaticMeasurement();
 void setActivePlatform(uint8_t platf_id);
 void savePhotodetectorData();
+bool isPlatformReachStartPosition();
+bool isPlatformReachEndPosition();
 
 #endif

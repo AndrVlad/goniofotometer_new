@@ -158,11 +158,19 @@ void dispatchDynamicMeasurement() {
 		}
 		break;
 	case MOVING:
+		if (isPlatformReachStartPosition()) {
+			setFSMActionState(POLL_PD);
+		}
 	case POLL_PD:
 		if (uart1_rx_complete) {
 			uart1_rx_complete = 0;
 			savePhotodetectorData();
 		}
+
+		if (isPlatformReachEndPosition()) {
+			setFSMActionState(DECELERATION);
+		}
+
 		 // получает последнее значение с энкодера, триггерит АЦП и отслеживает позиционирование, сменяя флаг.
 		handleDynamicMeasurement();
 		break;

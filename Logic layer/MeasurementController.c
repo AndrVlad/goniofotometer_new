@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include "Encoder.h"
 #include <stdbool.h>
-#include <math.h>
+#include <stdlib.h>
 
 enum activePlatform {
 	HORIZONTAL_PL = 0x0,
@@ -104,3 +104,11 @@ void initStaticMeasurement() {
 void savePhotodetectorData() {
 	return;
 };
+
+bool isPlatformReachStartPosition() {
+	return reach_start_position;
+};
+
+bool isPlatformReachEndPosition() {
+	return reach_end_position;
+}
