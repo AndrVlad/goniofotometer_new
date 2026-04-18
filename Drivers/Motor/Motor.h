@@ -23,6 +23,8 @@ typedef struct {
 	TIM_HandleTypeDef timer;
 } motor_t;
 
+void setActiveMotor(motor_t* motor);
+
 extern motor_t h_motor, v_motor;
 
 #endif /* MOTOR_MOTOR_H_ */

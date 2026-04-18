@@ -10,6 +10,9 @@
 #include "MeasurementController.h"
 #include "PC_Protocol.h"
 
+void dispatchDynamicMeasurement();
+void dispatchStaticMeasurement();
+
 enum FSMGlobalState curStateGlobal = INIT_STATE;
 enum FSMActionState curActionState = NONE_ACTION;
 
@@ -117,12 +120,12 @@ void dispatchTestRotation() {
 	switch (curActionState) {
 	case ACCELERATION:
 		handleTestRotation(); // осуществляет останов и смену состояний.
-		if (isMotorAccelerated(motor)) {
+		if (isMotorAccelerated()) {
 			setFSMActionState(MOVING);
 		} else {
 			if (tim4_ovflw) {
 				tim4_ovflw = 0;
-				accelerateMotor(motor);
+				accelerateMotor();
 			}
 		}
 		break;
@@ -130,7 +133,7 @@ void dispatchTestRotation() {
 		break;
 		handleTestRotation();
 	case DECELERATION:
-		if (isMotorStopped(motor)) {
+		if (isMotorStopped()) {
 			setFSMGlobalState(IDLE_STATE);
 			setFSMActionState(NONE_ACTION);
 		}
@@ -142,12 +145,12 @@ void dispatchTestRotation() {
 void dispatchDynamicMeasurement() {
 	switch (curActionState) {
 	case ACCELERATION:
-		if (isMotorAccelerated(motor)) {
+		if (isMotorAccelerated()) {
 			setFSMActionState(MOVING);
 		} else {
 			if (tim4_ovflw) {
 				tim4_ovflw = 0;
-				accelerateMotor(motor);
+				accelerateMotor();
 			}
 		}
 		break;
@@ -161,7 +164,7 @@ void dispatchDynamicMeasurement() {
 		handleDynamicMeasurement();
 		break;
 	case DECELERATION:
-		if (isMotorStopped(motor)) {
+		if (isMotorStopped()) {
 			setFSMGlobalState(IDLE_STATE);
 			setFSMActionState(NONE_ACTION);
 		} else {

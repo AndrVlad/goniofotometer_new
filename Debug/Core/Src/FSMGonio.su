@@ -1,0 +1,5 @@
+../Core/Src/FSMGonio.c:19:6:setFSMGlobalState	16	static
+../Core/Src/FSMGonio.c:23:6:setFSMActionState	16	static
+../Core/Src/FSMGonio.c:27:6:dispatchFSMGlobal	8	static
+../Core/Src/FSMGonio.c:119:6:dispatchTestRotation	8	static
+../Core/Src/FSMGonio.c:145:6:dispatchDynamicMeasurement	8	static
