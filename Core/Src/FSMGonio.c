@@ -158,9 +158,17 @@ void dispatchDynamicMeasurement() {
 		}
 		break;
 	case MOVING:
+		/*
+		if(isPlatformReachAccelPosition() && !isPlatformDirectionForward()) {
+			stopActivePlatform();
+			invertPlatformRotation();
+			setFSMActionState(ACCELERATION);
+		} */
+
 		if (isPlatformReachStartPosition()) {
 			setFSMActionState(POLL_PD);
 		}
+		handleDynamicMeasurement();
 	case POLL_PD:
 		if (uart1_rx_complete) {
 			uart1_rx_complete = 0;

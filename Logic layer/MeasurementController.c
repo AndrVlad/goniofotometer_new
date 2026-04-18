@@ -36,7 +36,151 @@ uint32_t calculateEncPosition(uint32_t val) {
 }
 
 void handleDynamicMeasurement() {
+	  // State - move to acceleration position
+	  if (!reach_accel_position) {
+		  //trans_states = 1;
+		  if ((measurement.platform->encoder->cur_value >= measurement.accel_pos - ENC_TOLERANCE)
+				  && (measurement.platform->encoder->cur_value <= measurement.accel_pos + ENC_TOLERANCE)) {
 
+			  if (!isPlatformRotationForward()) {
+				  stopPlatform();
+				  invertPlatformRotation();
+				  startPlatformRotation();
+				  setPlatformSpeed(measurement.meas_step);
+			  } else {
+				  setPlatformSpeed(measurement.meas_step);
+			  }
+
+			  reach_accel_position = 1;
+		  }
+	  }
+
+	  // State - move to start position
+	  if (reach_accel_position) {
+
+		  if (!reach_start_position) {
+			  trans_states = 0;
+
+			  if ((measurement.platform->encoder->cur_value >= measurement.start_pos - ENC_TOLERANCE)
+					  && (measurement.platform->encoder->cur_value <= measurement.start_pos + ENC_TOLERANCE)) {
+
+				  reach_start_position = 1;
+
+				  pollPhotodetector();
+			  }
+		  }
+
+		  // State - move to end position
+		  if (reach_start_position) {
+
+			  if (!reach_end_position) {
+
+				  if ((encoder1_data >= end_position_drv1) && (encoder1_data <= end_position_drv1 + ENCODER_TOLERANCE)) {
+
+					  HAL_UART_Receive_DMA(&huart1, uart1_rx_buffer, 5);
+					  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET);
+					  wait_adc_data_flag = 1;
+					  //encoder_data_buf_trg[enc_cnt_trg] = encoder1_data;
+					  //enc_cnt_trg++;
+					  usDelay(30);
+					  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
+					  test_counter_adc_data2++;
+					  reach_end_position = 1;
+					  return;
+
+					  /* was here
+					  // measurement end but adc buffer is not empty
+					  if (data_buf_counter > 0) {
+						  // clearing the part of the buffer that does not include useful data
+						  clearSpecifiedElemOfBuffer(adc_data_buf,33,data_buf_counter*3+1);
+						  data_status = _READY_;
+					  }
+
+					  // reset flags and state
+					  data_buf_counter = 0;
+					  data_elem_cnt = 1;
+					  cur_action = NONE;
+					  wait_flag = 0;
+					  ready_status = READY_;
+					  reach_end_position = 1;
+					  wait_adc_data_flag = 0;
+
+					  // stop measurement
+					  HAL_TIM_Base_Stop_IT(&htim2); // stop motor
+					  HAL_TIM_Base_Stop_IT(&htim7); // stop SPI timer */
+
+				  } else {
+					  // while not reached end_position
+					  /* normal rotation */
+					  /*
+					  if ((encoder1_data >= (encoder1_increment_res - 4)) && (encoder1_data <= (encoder1_increment_res + 4))) {
+					 		encoder1_increment_res += meas_res_drv1;
+						  if (encoder1_increment_res >= ENCODER_RESOLUTION) {
+							  encoder1_increment_res -= ENCODER_RESOLUTION;
+						  }
+						  */
+					/* normal rotation end */
+					  /* reverse rotation */
+					  if ((encoder1_data >= (encoder1_increment_res - 4)) && (encoder1_data <= (encoder1_increment_res + 4))) {
+
+						  if ((encoder1_increment_res - meas_res_drv1) < 0) {
+							  encoder1_increment_res = ENCODER_RESOLUTION - abs(encoder1_increment_res - meas_res_drv1);
+						  } else {
+							  encoder1_increment_res -= meas_res_drv1;
+						  }
+						/* reverse rotation end */
+
+						HAL_UART_Receive_DMA(&huart1, uart1_rx_buffer, 5);
+
+						HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET);
+						wait_adc_data_flag = 1;
+						//encoder_data_buf_trg[enc_cnt_trg] = encoder1_data;
+						//enc_cnt_trg++;
+						usDelay(30);
+
+						HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
+						test_counter_adc_data2++;
+
+					  }
+
+					  if (full_rotation) {
+						if ((encoder1_data >= control_pos - 60) && (encoder1_data <= control_pos + 60)) {
+							end_position_drv1 = start_position_drv1;
+						}
+					  }
+
+				  }
+			  }
+		  }
+	  }
+
+	  if (reach_end_position && !wait_adc_data_flag && data_status == NONE_) {
+		  if (data_buf_counter > 0) {
+			  // clearing the part of the buffer that does not include useful data
+			  clearSpecifiedElemOfBuffer(adc_data_buf,33,data_buf_counter*3+1);
+			  memcpy(adc_data_buf_safe, adc_data_buf,33);
+			  data_status = _READY_;
+		  }
+
+		  // reset flags and state
+		  data_buf_counter = 0;
+		  data_elem_cnt = 1;
+		  cur_action = NONE;
+		  wait_flag = 0;
+		  ready_status = READY_;
+		  reach_end_position = 1;
+		  wait_adc_data_flag = 0;
+
+		  stop_poll = 0;
+
+		  resetNVICPriority();
+
+		  // stop measurement
+		  stopMotorRotationReq(chosen_drv);
+		  //stopMotorRotation(chosen_drv);
+		  //HAL_TIM_Base_Stop_IT(&htim2); // stop motor
+		  //HAL_TIM_Base_Stop_IT(&htim7); // stop SPI timer
+	  }
 	return;
 }
 
@@ -89,7 +233,7 @@ void initDynamicMeasurement(enum meas_type_t meas_type, uint16_t start_angle_ite
 	setFSMGlobalState(DYNAMIC_MEASUREMENT_STATE);
 	setFSMActionState(ACCELERATION);
 
-	setPlatformSpeed(measurement.meas_step);
+	setPlatformSpeed(DEFAULT_MOTOR_FREQ);
 	setPlatformDirection(measurement.accel_pos);
 	startPlatformRotation();
 };
