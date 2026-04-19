@@ -45,7 +45,7 @@ void setOffsetPosition() {
 };
 void setPlatformSpeed(uint32_t step) {
 
-	switch(meas_res) {
+	switch(step) {
 	case 1820: // разрешение 5 градусов
 	case 365:
 	case 182:

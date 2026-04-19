@@ -16,11 +16,11 @@ typedef struct {
 
 extern platform_t horizontal, vertical;
 
-void setOffsetPosition(platform_t* platform);
+void setOffsetPosition();
 void setPlatformSpeed(uint32_t step);
 void setCurrentPlatform(platform_t* platform);
 void setPlatformDirection(uint32_t target_position);
-void invertPlatformRotation();
+void invertPlatformDirection();
 void startPlatformRotation();
 void stopPlatform();
 

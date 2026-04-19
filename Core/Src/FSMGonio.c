@@ -3,6 +3,7 @@
 #include "MeasurementController.h"
 #include "PC_Protocol.h"
 #include "Platform.h"
+#include "PhotodetectorController.h"
 
 void dispatchDynamicMeasurement();
 void dispatchStaticMeasurement();
@@ -202,6 +203,19 @@ void dispatchStaticMeasurement() {
 }
 
 void dispatchCalibration() {
+	switch (curActionState) {
+	case COEFF_SETTING:
+		if (uart1_rx_complete) {
+			handleCoeffSetting();
+			if (isSuccessCoeffSetting()) {
+				setFSMActionState(NONE_ACTION);
+				setFSMGlobalState(IDLE_STATE);
+			} else {
+				setFSMActionState(NONE_ACTION);
+				setFSMGlobalState(ERROR_STATE);
+			}
+		}
+	}
 	return;
 }
 

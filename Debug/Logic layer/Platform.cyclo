@@ -5,9 +5,10 @@ Platform.c:23:6:isPlatformAccelerated	2
 Platform.c:31:6:deceleratePlatform	1
 Platform.c:36:6:setCurrentPlatform	1
 Platform.c:41:6:setOffsetPosition	1
-Platform.c:46:6:setPlatformSpeed	1
-Platform.c:50:6:setPlatformDirection	1
-Platform.c:53:6:startPlatformRotation	1
-Platform.c:57:6:stopPlatform	1
-Platform.c:61:6:isPlatformRotationForward	1
-Platform.c:65:6:invertPlatformRotation	1
+Platform.c:46:6:setPlatformSpeed	11
+Platform.c:71:6:setSpecifiedPlatformSpeed	1
+Platform.c:76:6:setPlatformDirection	1
+Platform.c:79:6:startPlatformRotation	1
+Platform.c:84:6:stopPlatform	1
+Platform.c:89:6:isPlatformRotationForward	2
+Platform.c:97:6:invertPlatformDirection	2

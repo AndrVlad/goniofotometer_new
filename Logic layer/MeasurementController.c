@@ -44,7 +44,7 @@ void handleDynamicMeasurement() {
 
 			  if (!isPlatformRotationForward()) {
 				  stopPlatform();
-				  invertPlatformRotation();
+				  invertPlatformDirection();
 				  startPlatformRotation();
 				  setPlatformSpeed(measurement.meas_step);
 			  } else {

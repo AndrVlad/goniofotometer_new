@@ -19,4 +19,6 @@ typedef struct  {
 
 extern encoder_t h_encoder, v_encoder;
 
+void setEncoderPollFrequency(encoder_t* encoder, uint16_t poll_freq);
+
 #endif /* ENCODER_ENCODER_H_ */
