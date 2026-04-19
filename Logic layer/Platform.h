@@ -27,6 +27,7 @@ void stopPlatform();
 bool isPlatformStopped();
 bool isPlatformAccelerated();
 bool isPlatformRotationForward();
+bool isPlatformReachTestPosition();
 
 void acceleratePlatform();
 void deceleratePlatform();

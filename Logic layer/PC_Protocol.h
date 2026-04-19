@@ -11,7 +11,14 @@
 #define EQUATORIAL_MEASUREMENT		0x2
 #define MERIDIONAL_MEASUREMENT		0x3
 #define STATIC_MEASUREMENT 			0x5
+#define EMERGENCY_STOP				0x7
 #define ACTIVE_HORIZONTAL_PLATFORM	0xA
+#define GET_ADC_DATA				0xB
+#define GET_ERROR_CODE				0xC
+#define TEST_ANGLE_ROTATION			0x10
+#define SET_ADC_PARAMS				0x14
+#define SET_PLATFORM_OFFSET			0x17
+#define START_ADC_CALIBRATION		0x1A
 
 bool isADCDataAvailable();
 void parserCMD();

@@ -18,7 +18,7 @@ uint32_t time_interval_items[9] = 	{36001000,18001000,6001000,601000,301000,1010
 uint16_t time_step_items[12] 	= 	{50000,25000,10000,5000,2500,1000,500,250,100,50,25,10}; // values for TIMER ARR
 int32_t end_position_tmp, control_position = 0;
 bool full_rotation = 0;
-bool reach_start_position, reach_accel_position, reach_end_position = 0;
+bool reach_start_position, reach_accel_position, reach_end_position, reach_test_position = 0;
 
 measurement_t measurement;
 
@@ -31,7 +31,7 @@ void setActivePlatform(uint8_t platf_id) {
 	setCurrentPlatform(measurement.platform);
 }
 
-uint32_t calculateEncPosition(uint32_t val) {
+uint32_t calculateEncPosition(uint32_t val, uint32_t offset) {
 	uint32_t result = 0;
 	return result;
 }
@@ -39,7 +39,6 @@ uint32_t calculateEncPosition(uint32_t val) {
 void handleDynamicMeasurement() {
 	  // State - move to acceleration position
 	  if (!reach_accel_position) {
-		  //trans_states = 1;
 		  if ((measurement.platform->encoder->cur_value >= measurement.accel_pos - ENC_TOLERANCE)
 				  && (measurement.platform->encoder->cur_value <= measurement.accel_pos + ENC_TOLERANCE)) {
 
@@ -83,7 +82,7 @@ void handleDynamicMeasurement() {
 					  return;
 
 				  } else {
-					  /* reverse rotation */
+
 					  if ((measurement.platform->encoder->cur_value >= (measurement.next_step_val - ENC_TOLERANCE))
 							  && (measurement.platform->encoder->cur_value <= (measurement.next_step_val + ENC_TOLERANCE))) {
 
@@ -127,9 +126,9 @@ void initDynamicMeasurement(enum meas_type_t meas_type, uint16_t start_angle_ite
 	// reset flags
 	reach_start_position = reach_accel_position = reach_end_position = 0;
 
-	measurement.accel_pos = calculateEncPosition(((accel_angle * ENCODER_RESOLUTION) / 360));
-	measurement.start_pos = calculateEncPosition(((start_angle * ENCODER_RESOLUTION) / 360));
-	measurement.end_pos = calculateEncPosition(((end_angle * ENCODER_RESOLUTION) / 360));
+	measurement.accel_pos = calculateEncPosition(((accel_angle * ENCODER_RESOLUTION) / 360),measurement.platform->offset_position);
+	measurement.start_pos = calculateEncPosition(((start_angle * ENCODER_RESOLUTION) / 360),measurement.platform->offset_position);
+	measurement.end_pos = calculateEncPosition(((end_angle * ENCODER_RESOLUTION) / 360),measurement.platform->offset_position);
 	measurement.meas_step = step;
 
 	if ((measurement.start_pos - measurement.meas_step) < 0) {
@@ -154,7 +153,7 @@ void initDynamicMeasurement(enum meas_type_t meas_type, uint16_t start_angle_ite
 			control_position = end_position_tmp - 720;
 		}
 
-		measurement.end_pos = calculateEncPosition((((end_angle+4) * ENCODER_RESOLUTION) / 360));
+		measurement.end_pos = calculateEncPosition((((end_angle+4) * ENCODER_RESOLUTION) / 360),measurement.platform->offset_position);
 	}
 
 	setFSMGlobalState(DYNAMIC_MEASUREMENT_STATE);
@@ -172,6 +171,32 @@ void initStaticMeasurement() {
 	return;
 }
 
+void handleTestRotation() {
+
+	return;
+}
+
+void initTestRotation(uint8_t lsb_angle, uint8_t msb_angle, uint8_t type) {
+	uint32_t temp_pos, test_angle;
+	// получение заданного угла из команды
+	test_angle = 0;
+	test_angle = msb_angle << 8;
+	test_angle |= lsb_angle;
+	test_angle = 360 - test_angle;
+
+	temp_pos = (test_angle * ENCODER_RESOLUTION) / 360;
+
+	if(type == ABSOLUTE) { // вращение на абсолютный угол по лимбу
+		measurement.test_pos = calculateEncPosition(temp_pos,measurement.platform->offset_position);
+	} else {			// вращение на угол относительно текущей позиции
+		measurement.test_pos = calculateEncPosition(temp_pos,measurement.platform->encoder->cur_value);
+	}
+
+	setPlatformDirection(measurement.test_pos);
+	startPlatformRotation();
+	return;
+};
+
 void savePhotodetectorData() {
 	return;
 };
@@ -182,4 +207,8 @@ bool isPlatformReachStartPosition() {
 
 bool isPlatformReachEndPosition() {
 	return reach_end_position;
+}
+
+bool isPlatformReachTestPosition() {
+	return reach_test_position;
 }

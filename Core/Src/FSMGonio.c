@@ -7,7 +7,6 @@
 void dispatchDynamicMeasurement();
 void dispatchStaticMeasurement();
 void dispatchCalibration();
-void handleTestRotation();
 void dispatchTestRotation();
 
 enum FSMGlobalState curStateGlobal = INIT_STATE;
@@ -106,8 +105,9 @@ void dispatchFSMGlobal() {
 
 		if (spi3_rx_complete || spi4_rx_complete) {
 			spi3_rx_complete = spi4_rx_complete = 0;
-			dispatchTestRotation();
 		}
+
+		dispatchTestRotation();
 
 		break;
 	}
@@ -127,8 +127,12 @@ void dispatchTestRotation() {
 		}
 		break;
 	case MOVING:
-		break;
+		if(isPlatformReachTestPosition()) {
+			setFSMActionState(DECELERATION);
+		}
 		handleTestRotation();
+		break;
+
 	case DECELERATION:
 		if (isPlatformStopped()) {
 			setFSMGlobalState(IDLE_STATE);
@@ -201,7 +205,5 @@ void dispatchCalibration() {
 	return;
 }
 
-void handleTestRotation() {
-	return;
-}
+
 

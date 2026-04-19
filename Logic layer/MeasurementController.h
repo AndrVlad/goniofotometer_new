@@ -11,12 +11,18 @@ enum meas_type_t {
 	TEST,
 };
 
+enum rotation_type_t {
+	ABSOLUTE,
+	RELATIVE = 0xFF
+};
+
 typedef struct {
 	enum meas_type_t meas_type;
 	platform_t* platform;
 	uint32_t accel_pos;
 	uint32_t start_pos;
 	uint32_t end_pos;
+	uint32_t test_pos;
 	uint32_t meas_step;
 	int32_t next_step_val;
 } measurement_t;
@@ -25,9 +31,12 @@ void handleDynamicMeasurement();
 void initDynamicMeasurement(enum meas_type_t meas_type, uint16_t start_angle_item, uint16_t end_angle_item, uint16_t step_item);
 void handleStaticMeasurement();
 void initStaticMeasurement();
+void initTestRotation(uint8_t lsb_angle, uint8_t msb_angle, uint8_t type);
+void handleTestRotation();
 void setActivePlatform(uint8_t platf_id);
 void savePhotodetectorData();
 bool isPlatformReachStartPosition();
 bool isPlatformReachEndPosition();
+bool isPlatformReachTestPosition();
 
 #endif

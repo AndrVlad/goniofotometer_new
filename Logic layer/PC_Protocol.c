@@ -53,6 +53,10 @@ void sendResponseOnCMD(uint8_t cmd_code, enum response_t response) {
 	return;
 }
 
+void sendPreviousResponse() {
+	return;
+};
+
 bool isADCDataAvailable() {
 	return true;
 }
@@ -68,7 +72,7 @@ void parserCMD() {
 
 	switch(cmd_buf[0]) {
 	case CRC_ERROR:
-
+		sendPreviousResponse();
 		break;
 	case GET_STATUS:
 		break;
@@ -76,10 +80,8 @@ void parserCMD() {
 		sendResponseOnCMD(EQUATORIAL_MEASUREMENT, CMD_ACCEPTED);
 		stopUpdatePDData();
 		initDynamicMeasurement(EQUATORIAL,cmd_buf[1],cmd_buf[2],cmd_buf[3]);
-
 		// set current action
 		cur_action = EQUATORIAL_ACTION;
-
 		// set status
 		work_status = BUSY_STATUS;
 
@@ -90,13 +92,51 @@ void parserCMD() {
 		initDynamicMeasurement(MERIDIONAL,cmd_buf[1],cmd_buf[2],cmd_buf[3]);
 		// set current action
 		cur_action = MERIDIONAL_ACTION;
-
 		// set status
 		work_status = BUSY_STATUS;
 		break;
+	case EMERGENCY_STOP:
+		sendResponseOnCMD(EMERGENCY_STOP, CMD_ACCEPTED);
+		//stopCurrentAction();
+		cur_action = NONE_ACTION;
+		work_status = READY_STATUS;
+		break;
+	case GET_ADC_DATA:
+		//sendDataPacket();
+		break;
+	case GET_ERROR_CODE:
+		//sendErrorPacket();
+		cur_action = NONE_ACTION;
+		work_status = READY_STATUS;
+		setFSMGlobalState(INIT_STATE);
+		setFSMActionState(NONE_ACTION);
+		break;
+	case TEST_ANGLE_ROTATION:
+		sendResponseOnCMD(TEST_ANGLE_ROTATION, CMD_ACCEPTED);
+		initTestRotation(cmd_buf[1], cmd_buf[2], cmd_buf[3]);
+		cur_action = TEST_ANGLE_OFFSET;
+		work_status = BUSY_STATUS;
+		break;
+	case SET_ADC_PARAMS:
+		sendResponseOnCMD(SET_ADC_PARAMS, CMD_ACCEPTED);
+		stopUpdatePDData();
+		//initSettingADC();
+		cur_action = CALIBRATION;
+		work_status = BUSY_STATUS;
+		break;
+	case SET_PLATFORM_OFFSET:
+		sendResponseOnCMD(SET_PLATFORM_OFFSET, CMD_ACCEPTED);
+		setOffsetPosition();
+		break;
+	case START_ADC_CALIBRATION:
+		sendResponseOnCMD(START_ADC_CALIBRATION, CMD_ACCEPTED);
+		stopUpdatePDData();
+		cur_action = CALIBRATION;
+		work_status = BUSY_STATUS;
+		break;
 	case ACTIVE_HORIZONTAL_PLATFORM:
+		sendResponseOnCMD(ACTIVE_HORIZONTAL_PLATFORM, CMD_ACCEPTED);
 		setActivePlatform(cmd_buf[1]);
 		break;
-
 	}
 }
