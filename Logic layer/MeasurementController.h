@@ -3,6 +3,7 @@
 #include "Platform.h"
 
 #define ACCEL_OFFSET 5
+#define ENC_TOLERANCE 5
 
 enum meas_type_t {
 	EQUATORIAL,
@@ -17,7 +18,7 @@ typedef struct {
 	uint32_t start_pos;
 	uint32_t end_pos;
 	uint32_t meas_step;
-	uint32_t next_step_val;
+	int32_t next_step_val;
 } measurement_t;
 
 void handleDynamicMeasurement();

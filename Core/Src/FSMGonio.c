@@ -1,10 +1,3 @@
-/*
- * FSMGonio.c
- *
- *  Created on: Apr 14, 2026
- *      Author: Admin
- */
-
 #include "Common.h"
 #include "FSMGonio.h"
 #include "MeasurementController.h"
@@ -15,6 +8,7 @@ void dispatchDynamicMeasurement();
 void dispatchStaticMeasurement();
 void dispatchCalibration();
 void handleTestRotation();
+void dispatchTestRotation();
 
 enum FSMGlobalState curStateGlobal = INIT_STATE;
 enum FSMActionState curActionState = NONE_ACTION;
@@ -142,7 +136,7 @@ void dispatchTestRotation() {
 		}
 		break;
 	}
-
+	return;
 }
 
 void dispatchDynamicMeasurement() {
@@ -158,17 +152,12 @@ void dispatchDynamicMeasurement() {
 		}
 		break;
 	case MOVING:
-		/*
-		if(isPlatformReachAccelPosition() && !isPlatformDirectionForward()) {
-			stopActivePlatform();
-			invertPlatformRotation();
-			setFSMActionState(ACCELERATION);
-		} */
 
 		if (isPlatformReachStartPosition()) {
 			setFSMActionState(POLL_PD);
 		}
 		handleDynamicMeasurement();
+		break;
 	case POLL_PD:
 		if (uart1_rx_complete) {
 			uart1_rx_complete = 0;
@@ -179,18 +168,26 @@ void dispatchDynamicMeasurement() {
 			setFSMActionState(DECELERATION);
 		}
 
-		 // получает последнее значение с энкодера, триггерит АЦП и отслеживает позиционирование, сменяя флаг.
 		handleDynamicMeasurement();
 		break;
 	case DECELERATION:
-		if (isPlatformStopped()) {
-			setFSMGlobalState(IDLE_STATE);
-			setFSMActionState(NONE_ACTION);
+		if (uart1_rx_complete) {
+			uart1_rx_complete = 0;
+			savePhotodetectorData();
+		}
+		if (isPlatformStopped() && isADCDataAvailable()) {
+			setFSMActionState(WAITING);
 		} else {
 			if (tim12_ovflw) {
 				tim12_ovflw = 0;
 				deceleratePlatform();
 			}
+		}
+		break;
+	case WAITING:
+		if (!isADCDataAvailable()) {
+			setFSMGlobalState(IDLE_STATE);
+			setFSMActionState(NONE_ACTION);
 		}
 		break;
 	}

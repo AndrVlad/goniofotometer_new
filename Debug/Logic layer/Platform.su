@@ -7,3 +7,6 @@
 ../Logic layer/Platform.c:27:6:setPlatformSpeed	16	static
 ../Logic layer/Platform.c:31:6:setPlatformDirection	16	static
 ../Logic layer/Platform.c:34:6:startPlatformRotation	4	static
+../Logic layer/Platform.c:38:6:stopPlatform	4	static
+../Logic layer/Platform.c:42:6:isPlatformRotationForward	4	static
+../Logic layer/Platform.c:46:6:invertPlatformRotation	4	static

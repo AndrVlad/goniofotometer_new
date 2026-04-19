@@ -1,6 +1,8 @@
 #ifndef PC_PROTOCOL_H
 #define PC_PROTOCOL_H
 
+#include <stdbool.h>
+
 #define RESPONSE_FRAME_LEN 			33
 #define CMD_FRAME_LEN 				6
 
@@ -11,6 +13,8 @@
 #define STATIC_MEASUREMENT 			0x5
 #define ACTIVE_HORIZONTAL_PLATFORM	0xA
 
+bool isADCDataAvailable();
 void parserCMD();
+
 
 #endif

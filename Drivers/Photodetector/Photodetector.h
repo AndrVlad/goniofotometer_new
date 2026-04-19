@@ -8,4 +8,6 @@
 #ifndef PHOTODETECTOR_PHOTODETECTOR_H_
 #define PHOTODETECTOR_PHOTODETECTOR_H_
 
+void pollPhotodetector();
+
 #endif /* PHOTODETECTOR_PHOTODETECTOR_H_ */

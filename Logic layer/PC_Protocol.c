@@ -53,6 +53,10 @@ void sendResponseOnCMD(uint8_t cmd_code, enum response_t response) {
 	return;
 }
 
+bool isADCDataAvailable() {
+	return true;
+}
+
 void parserCMD() {
 	cmd_buf_ptr = getPCCommand();
 	if (!checkCRC(cmd_buf)) {

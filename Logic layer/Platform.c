@@ -33,4 +33,16 @@ void setPlatformDirection(uint32_t target_position) {
 };
 void startPlatformRotation() {
 	return;
+}
+
+void stopPlatform() {
+	return;
+}
+
+bool isPlatformRotationForward() {
+	return true;
+}
+
+void invertPlatformRotation() {
+	return;
 };

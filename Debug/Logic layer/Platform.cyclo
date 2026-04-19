@@ -7,3 +7,6 @@ Platform.c:24:6:setOffsetPosition	1
 Platform.c:27:6:setPlatformSpeed	1
 Platform.c:31:6:setPlatformDirection	1
 Platform.c:34:6:startPlatformRotation	1
+Platform.c:38:6:stopPlatform	1
+Platform.c:42:6:isPlatformRotationForward	1
+Platform.c:46:6:invertPlatformRotation	1

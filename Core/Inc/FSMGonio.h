@@ -1,10 +1,3 @@
-/*
- * FSMGonio.h
- *
- *  Created on: Apr 14, 2026
- *      Author: Admin
- */
-
 #ifndef INC_FSMGONIO_H_
 #define INC_FSMGONIO_H_
 
@@ -26,7 +19,8 @@ enum FSMActionState {
 	MOVING,
 	POLL_PD,
 	DECELERATION,
-	COEFF_SETTING
+	COEFF_SETTING,
+	WAITING
 };
 
 void dispatchFSMGlobal();
