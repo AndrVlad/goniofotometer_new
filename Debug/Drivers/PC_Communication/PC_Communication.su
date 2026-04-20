@@ -1,1 +1,2 @@
 ../Drivers/PC_Communication/PC_Communication.c:12:10:getPCCommand	4	static
+../Drivers/PC_Communication/PC_Communication.c:16:6:sendAnswerToPC	16	static

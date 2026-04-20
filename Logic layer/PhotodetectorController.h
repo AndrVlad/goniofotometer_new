@@ -12,5 +12,6 @@ bool isSuccessCoeffSetting();
 bool isCalibrationEnd();
 bool isCalibrationSuccess();
 void initADCCalibration();
+uint8_t* getADCValue();
 
 #endif /* PHOTODETECTORCONTROLLER_H_ */

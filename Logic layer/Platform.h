@@ -32,4 +32,7 @@ bool isPlatformReachTestPosition();
 void acceleratePlatform();
 void deceleratePlatform();
 
+uint32_t getOffsetPosition(uint8_t platform_num);
+uint32_t getInvertedEncoderVal(uint8_t encoder_num);
+
 #endif

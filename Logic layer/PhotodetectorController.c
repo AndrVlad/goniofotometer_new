@@ -12,6 +12,16 @@ uint8_t adc_params_tmp, data_counter, adc_data_cnt, calib_buf_cnt = 0;
 bool coeff_setting_success, calibration_end, calibration_success = 0;
 uint8_t calibration_buffer[CALIB_DATA_SAMPLES_NUM], adc_values_buf[CALIB_DATA_SAMPLES_NUM] = {0};
 
+bool checkCRCPhotodetectorData(uint8_t* data_buf);
+
+uint8_t* getADCValue() {
+	uint8_t* pd_data;
+	if(checkCRCPhotodetectorData(getPDData())) {
+		return pd_data;
+	}
+	return 0;
+}
+
 uint8_t getADCAmplifierValInverted(uint8_t value);
 
 bool checkCRCPhotodetectorData(uint8_t* data_buf) {

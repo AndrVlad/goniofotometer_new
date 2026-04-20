@@ -13,4 +13,9 @@ uint8_t* getPCCommand() {
 	return uart3_rx_buf;
 }
 
+void sendAnswerToPC(uint8_t* data, uint8_t size) {
+	HAL_UART_Transmit(&huart3, data,size,100);
+	return;
+}
+
 

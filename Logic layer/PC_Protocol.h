@@ -6,7 +6,7 @@
 #define RESPONSE_FRAME_LEN 			33
 #define CMD_FRAME_LEN 				6
 
-#define CRC_ERROR 					0x0
+#define CRC_ERROR 					0xFF
 #define GET_STATUS 					0x1
 #define EQUATORIAL_MEASUREMENT		0x2
 #define MERIDIONAL_MEASUREMENT		0x3

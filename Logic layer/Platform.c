@@ -102,3 +102,11 @@ void invertPlatformDirection() {
 	}
 	return;
 };
+
+uint32_t getOffsetPosition(uint8_t platform_num) {
+	return current_platform->offset_position;
+};
+
+uint32_t getInvertedEncoderVal(uint8_t encoder_num) {
+	return current_platform->encoder->inv_value;
+}

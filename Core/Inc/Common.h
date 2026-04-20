@@ -16,6 +16,10 @@
 extern bool uart1_rx_complete, uart3_rx_complete, spi3_rx_complete, spi4_rx_complete, tim12_ovflw, tim4_ovflw, tim10_ovflw;
 
 extern SPI_HandleTypeDef hspi3;
+
+extern UART_HandleTypeDef huart1;
+extern UART_HandleTypeDef huart3;
+
 extern TIM_HandleTypeDef htim11;
 
 #endif /* INC_COMMON_H_ */
