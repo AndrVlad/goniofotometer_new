@@ -35,4 +35,5 @@
 "./Drivers/Timer/Timer.o"
 "./Logic layer/MeasurementController.o"
 "./Logic layer/PC_Protocol.o"
+"./Logic layer/PhotodetectorController.o"
 "./Logic layer/Platform.o"

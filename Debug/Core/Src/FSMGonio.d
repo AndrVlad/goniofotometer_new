@@ -33,13 +33,13 @@ Core/Src/FSMGonio.o: ../Core/Src/FSMGonio.c ../Core/Inc/Common.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h \
  ../Core/Inc/FSMGonio.h \
- C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/MeasurementController.h \
- C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/Platform.h \
- C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Encoder/Encoder.h \
- C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Motor/Motor.h \
- C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/PC_Protocol.h \
- C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/Platform.h \
- C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/PhotodetectorController.h
+ C:/Users/vlado/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/MeasurementController.h \
+ C:/Users/vlado/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/Platform.h \
+ C:/Users/vlado/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Encoder/Encoder.h \
+ C:/Users/vlado/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Motor/Motor.h \
+ C:/Users/vlado/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/PC_Protocol.h \
+ C:/Users/vlado/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/Platform.h \
+ C:/Users/vlado/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/PhotodetectorController.h
 ../Core/Inc/Common.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h:
 ../Core/Inc/stm32f7xx_hal_conf.h:
@@ -75,10 +75,10 @@ Core/Src/FSMGonio.o: ../Core/Src/FSMGonio.c ../Core/Inc/Common.h \
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h:
 ../Core/Inc/FSMGonio.h:
-C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/MeasurementController.h:
-C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/Platform.h:
-C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Encoder/Encoder.h:
-C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Motor/Motor.h:
-C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/PC_Protocol.h:
-C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/Platform.h:
-C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/PhotodetectorController.h:
+C:/Users/vlado/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/MeasurementController.h:
+C:/Users/vlado/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/Platform.h:
+C:/Users/vlado/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Encoder/Encoder.h:
+C:/Users/vlado/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Motor/Motor.h:
+C:/Users/vlado/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/PC_Protocol.h:
+C:/Users/vlado/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/Platform.h:
+C:/Users/vlado/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic\ layer/PhotodetectorController.h:

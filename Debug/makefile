@@ -66,8 +66,8 @@ all: main-build
 main-build: goniofotometer_new.elf secondary-outputs
 
 # Tool invocations
-goniofotometer_new.elf goniofotometer_new.map: $(OBJS) $(USER_OBJS) C:\Users\Admin\STM32CubeIDE\workspace_1.12.0\goniofotometer_new\STM32F722VCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "goniofotometer_new.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\Admin\STM32CubeIDE\workspace_1.12.0\goniofotometer_new\STM32F722VCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="goniofotometer_new.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+goniofotometer_new.elf goniofotometer_new.map: $(OBJS) $(USER_OBJS) C:\Users\vlado\STM32CubeIDE\workspace_1.12.0\goniofotometer_new\STM32F722VCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "goniofotometer_new.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\vlado\STM32CubeIDE\workspace_1.12.0\goniofotometer_new\STM32F722VCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="goniofotometer_new.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

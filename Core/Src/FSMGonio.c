@@ -206,6 +206,7 @@ void dispatchCalibration() {
 	switch (curActionState) {
 	case COEFF_SETTING:
 		if (uart1_rx_complete) {
+			uart1_rx_complete = 0;
 			handleCoeffSetting();
 			if (isSuccessCoeffSetting()) {
 				setFSMActionState(NONE_ACTION);
@@ -215,6 +216,23 @@ void dispatchCalibration() {
 				setFSMGlobalState(ERROR_STATE);
 			}
 		}
+		break;
+	case ACCUMULATION_PD_DATA:
+		if (uart1_rx_complete) {
+			uart1_rx_complete = 0;
+			handleCalibration();
+		}
+
+		if (isCalibrationEnd() && isCalibrationSuccess()) {
+			if (isCalibrationSuccess()) {
+				setFSMActionState(NONE_ACTION);
+				setFSMGlobalState(IDLE_STATE);
+			} else {
+				setFSMActionState(NONE_ACTION);
+				setFSMGlobalState(ERROR_STATE);
+				}
+			}
+		break;
 	}
 	return;
 }

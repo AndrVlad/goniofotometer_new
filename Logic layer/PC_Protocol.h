@@ -22,6 +22,7 @@
 
 bool isADCDataAvailable();
 void parserCMD();
+void setError(uint8_t error_code);
 
 
 #endif

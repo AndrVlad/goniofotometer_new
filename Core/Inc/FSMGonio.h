@@ -20,7 +20,8 @@ enum FSMActionState {
 	POLL_PD,
 	DECELERATION,
 	COEFF_SETTING,
-	WAITING
+	WAITING,
+	ACCUMULATION_PD_DATA
 };
 
 void dispatchFSMGlobal();

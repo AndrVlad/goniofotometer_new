@@ -33,6 +33,10 @@ uint8_t response_buf[RESPONSE_FRAME_LEN];
 enum status_current_action_t cur_action;
 enum work_status_t work_status;
 
+void setError(uint8_t error_code) {
+	return;
+}
+
 bool checkCRC(uint8_t* buf) {
 	return true;
 };
@@ -133,6 +137,9 @@ void parserCMD() {
 		stopUpdatePDData();
 		cur_action = CALIBRATION;
 		work_status = BUSY_STATUS;
+		initADCCalibration();
+		setFSMGlobalState(CALIBRATION_STATE);
+		setFSMActionState(ACCUMULATION_PD_DATA);
 		break;
 	case ACTIVE_HORIZONTAL_PLATFORM:
 		sendResponseOnCMD(ACTIVE_HORIZONTAL_PLATFORM, CMD_ACCEPTED);
