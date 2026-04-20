@@ -1,15 +1,16 @@
 #include "PhotodetectorController.h"
 #include "Photodetector.h"
 #include "PC_Protocol.h"
+#include "Timer.h"
 
 enum adc_freq_t {
 	FREQ_16_HZ,
 	FREQ_242_HZ
 };
 
-uint8_t adc_params_tmp, data_counter, adc_data_cnt = 0;
+uint8_t adc_params_tmp, data_counter, adc_data_cnt, calib_buf_cnt = 0;
 bool coeff_setting_success, calibration_end, calibration_success = 0;
-uint8_t calibration_buffer[CALIB_DATA_SAMPLES_NUM] = {0};
+uint8_t calibration_buffer[CALIB_DATA_SAMPLES_NUM], adc_values_buf[CALIB_DATA_SAMPLES_NUM] = {0};
 
 uint8_t getADCAmplifierValInverted(uint8_t value);
 
@@ -74,10 +75,65 @@ uint8_t getADCAmplifierValInverted(uint8_t value) {
 	}
 }
 
+uint32_t calculateMedianVal(uint32_t* buf, uint16_t size, uint8_t limit) {
+	uint8_t end_limit = size - (limit + 1);
+	uint64_t median_val = 0;
+	uint32_t result;
+	for (uint16_t i = limit; i <= end_limit; i++) {
+		median_val += buf[i];
+	}
+	result = median_val / (size - limit*2);
+	return result;
+}
+
+void swap(uint32_t* a, uint32_t* b) {
+    uint32_t tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+void bubbleSort(uint32_t *buf, uint16_t size)
+{
+	while (size--)
+	{
+		bool swapped = false;
+
+		for (int i = 0; i < size; i++)
+		{
+			if (buf[i] > buf[i + 1])
+			{
+				swap(&buf[i], &buf[i + 1]);
+				swapped = true;
+			}
+		}
+
+		if (swapped == false)
+			break;
+	}
+}
+
+uint32_t getPDOffsetVal() {
+
+	// преобразование значений АЦП
+	uint32_t adc_values_buf[CALIB_DATA_SAMPLES_NUM];
+	for (uint16_t i = 0, j = 0; i < CALIB_DATA_SAMPLES_NUM * 3; i += 3, j++) {
+		adc_values_buf[j] = calibration_buffer[i];
+		adc_values_buf[j] |= calibration_buffer[i+1] << 8;
+		adc_values_buf[j] |= calibration_buffer[i+2] << 16;
+	}
+
+	// сортировка
+	bubbleSort(adc_values_buf, CALIB_DATA_SAMPLES_NUM);
+
+	// вычисление значения смещения
+	uint32_t offset = calculateMedianVal(adc_values_buf, CALIB_DATA_SAMPLES_NUM, 12);
+	return offset;
+}
+
 void handleCoeffSetting() {
 
 	uint8_t* rx_buf = getPDData();
-	if (checkCRCPhotodetectorData(getPDData())) {
+	if (checkCRCPhotodetectorData(rx_buf)) {
 		// проверка на совпадение второго полубайта ответа с первым полубайтом запроса
 		if (rx_buf[0] != (adc_params_tmp >> 4)) {
 			setError(0x1);
@@ -93,57 +149,34 @@ void handleCoeffSetting() {
 	}
 }
 
+void initADCCalibration() {
+	startCalibrationTimer();
+	return;
+}
+
 void handleCalibration() {
 
 	uint8_t* rx_buf = getPDData();
 
-	for (uint8_t i = 0; i < 3; i++, j++) {
-	  calibration_buffer[j] = rx_buf[i];
+	if (!checkCRCPhotodetectorData(rx_buf)) {
+		setError(0x2);
+		calibration_end = 1;
+		calibration_success = 0;
+	}
+
+	for (uint8_t i = 0; i < 3; i++, calib_buf_cnt++) {
+	  calibration_buffer[calib_buf_cnt] = rx_buf[i];
 	}
 
 	adc_data_cnt++;
 
-	if (!(adc_data_cnt == 50)) {
+	if (!(adc_data_cnt == CALIB_DATA_SAMPLES_NUM)) {
 	  return;
 	} else {
-		HAL_TIM_Base_Stop_IT(&htim10);
-
-			  convertAdcValues(uart1_rx_calibration_buffer, data_buf_counter * 3);
-			  bubbleSort(adc_values_buf, data_buf_counter);
-			  photodetector_offset_val = calculateMedianVal(adc_values_buf, data_buf_counter, 12);
-
-			  data_buf_counter = 0;
-			  data_elem_cnt_calib = 0;
-			  wait_flag = 0;
-
-			  clearBuffer(adc_data_buf,33);
-
-			  adc_data_buf[1] = photodetector_offset_val;
-			  adc_data_buf[2] = photodetector_offset_val >> 8;
-			  adc_data_buf[3] = photodetector_offset_val >> 16;
-
-			  adc_data_buf[4] = adc_data_buf[1];
-			  adc_data_buf[5] = adc_data_buf[2];
-			  adc_data_buf[6] = adc_data_buf[3];
-
-			  data_status = _READY_;
-			  end_calibration_flag = 1;
+		stopCalibrationTimer();
+		uint32_t pd_offset_val = getPDOffsetVal();
+		saveOffsetData(pd_offset_val);
 	}
-
-
-	}
-
-	if (end_calibration_flag) {
-	  if (data_status == NONE_){
-		  cur_action = NONE;
-		  ready_status = READY_;
-		  end_calibration_flag = 0;
-	  }
-	}
-
-
-
-	stopCalibrationTimer();
 
 	return;
 };

@@ -9,3 +9,10 @@ void resetKeepAliveTimer() {
 
 	return;
 };
+
+void startCalibrationTimer() {
+	return;
+};
+void stopCalibrationTimer() {
+	return;
+};

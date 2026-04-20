@@ -23,6 +23,7 @@
 bool isADCDataAvailable();
 void parserCMD();
 void setError(uint8_t error_code);
+void saveOffsetData(uint32_t);
 
 
 #endif

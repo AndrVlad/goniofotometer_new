@@ -4,4 +4,4 @@ FSMGonio.c:24:6:dispatchFSMGlobal	28
 FSMGonio.c:117:6:dispatchTestRotation	9
 FSMGonio.c:147:6:dispatchDynamicMeasurement	16
 FSMGonio.c:201:6:dispatchStaticMeasurement	1
-FSMGonio.c:205:6:dispatchCalibration	9
+FSMGonio.c:205:6:dispatchCalibration	12

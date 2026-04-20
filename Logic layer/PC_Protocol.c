@@ -33,6 +33,10 @@ uint8_t response_buf[RESPONSE_FRAME_LEN];
 enum status_current_action_t cur_action;
 enum work_status_t work_status;
 
+void saveOffsetData(uint32_t data) {
+	return;
+}
+
 void setError(uint8_t error_code) {
 	return;
 }

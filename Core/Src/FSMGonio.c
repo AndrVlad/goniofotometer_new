@@ -218,20 +218,30 @@ void dispatchCalibration() {
 		}
 		break;
 	case ACCUMULATION_PD_DATA:
+
+		if(tim10_ovflw) {
+			pollPhotodetector();
+		}
+
 		if (uart1_rx_complete) {
 			uart1_rx_complete = 0;
 			handleCalibration();
 		}
 
-		if (isCalibrationEnd() && isCalibrationSuccess()) {
+		if (isCalibrationEnd()) {
 			if (isCalibrationSuccess()) {
-				setFSMActionState(NONE_ACTION);
-				setFSMGlobalState(IDLE_STATE);
+				setFSMActionState(WAITING);
 			} else {
 				setFSMActionState(NONE_ACTION);
 				setFSMGlobalState(ERROR_STATE);
-				}
 			}
+		}
+		break;
+	case WAITING:
+		if (!isADCDataAvailable()) {
+			setFSMGlobalState(IDLE_STATE);
+			setFSMActionState(NONE_ACTION);
+		}
 		break;
 	}
 	return;

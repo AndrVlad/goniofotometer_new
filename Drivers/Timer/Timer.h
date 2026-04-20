@@ -9,5 +9,7 @@
 #define TIMER_TIMER_H_
 
 void resetKeepAliveTimer();
+void startCalibrationTimer();
+void stopCalibrationTimer();
 
 #endif /* TIMER_TIMER_H_ */

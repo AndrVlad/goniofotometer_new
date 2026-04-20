@@ -1,0 +1,13 @@
+PhotodetectorController.c:17:6:checkCRCPhotodetectorData	3
+PhotodetectorController.c:24:6:isCalibrationEnd	1
+PhotodetectorController.c:27:6:isCalibrationSuccess	1
+PhotodetectorController.c:31:6:isSuccessCoeffSetting	1
+PhotodetectorController.c:35:6:setParamsADC	3
+PhotodetectorController.c:54:9:getADCAmplifierValInverted	12
+PhotodetectorController.c:78:10:calculateMedianVal	2
+PhotodetectorController.c:89:6:swap	1
+PhotodetectorController.c:95:6:bubbleSort	5
+PhotodetectorController.c:115:10:getPDOffsetVal	2
+PhotodetectorController.c:133:6:handleCoeffSetting	3
+PhotodetectorController.c:152:6:initADCCalibration	1
+PhotodetectorController.c:157:6:handleCalibration	4

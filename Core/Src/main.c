@@ -151,6 +151,7 @@ int main(void)
   MX_TIM12_Init();
   MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
+  // глобальная инициализация блока управления
   globalInit();
   /* USER CODE END 2 */
 
@@ -158,168 +159,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	// обновление сторожевого таймера
 	HAL_IWDG_Refresh(&hiwdg);
-	// handle of message from PC
-
+	// вход в диспетчер машины состояний
 	dispatchFSMGlobal();
 
-	// handle of message from Photodetector
-	/*
-	if (uart1_rx_complete) {
-		checkPDData();
-
-	  // counter of received messages
-	  uart1_received_cnt_global++;
-
-	  checkCRCPhotodetectorData();
-
-	  // processing of received messages in measurement state of device
-	  if (cur_action == HORIZONTAL || cur_action == VERTICAL || cur_action == HEMISPHERE || cur_action == LIGHT_POWER) {
-
-		  // checking that the measurement data has been received
-		if (wait_adc_data_flag) {
-
-			// filling the buffer of measurement data
-			for (uint8_t i = 0; i < 3; i++, data_elem_cnt++) {
-				adc_data_buf[data_elem_cnt] = uart1_rx_safe_buffer_meas[i];
-			}
-
-			wait_adc_data_flag = 0;
-
-			data_buf_counter++;
-			test_data_buf_cnt = data_buf_counter;
-			adc_data_cnt++;
-			test_counter_adc_data++;
-
-			if (data_buf_counter == 10 && data_elem_cnt == 31) {
-				memcpy(adc_data_buf_safe, adc_data_buf, 33);
-				data_buf_counter = 0;
-				data_elem_cnt = 1;
-				data_status = _READY_;
-				packet_cnt++;
-			}
-		}
-	  }
-
-	  if (cur_action == CALIBRATION) {
-		  if (wait_adc_data_flag) {
-
-			  // filling the buffer of measurement data
-			  for (uint8_t i = 0; i < 3; i++, data_elem_cnt_calib++) {
-				  uart1_rx_calibration_buffer[data_elem_cnt_calib] = uart1_rx_safe_buffer_meas[i];
-			  }
-
-			  wait_adc_data_flag = 0;
-
-			  data_buf_counter++;
-			  test_data_buf_cnt = data_buf_counter;
-			  adc_data_cnt++;
-			  test_counter_adc_data++;
-
-			  // the buffer is filled
-			  if (data_buf_counter == 50) {
-				  HAL_TIM_Base_Stop_IT(&htim10);
-
-				  convertAdcValues(uart1_rx_calibration_buffer, data_buf_counter * 3);
-				  bubbleSort(adc_values_buf, data_buf_counter);
-				  photodetector_offset_val = calculateMedianVal(adc_values_buf, data_buf_counter, 12);
-
-				  data_buf_counter = 0;
-				  data_elem_cnt_calib = 0;
-				  wait_flag = 0;
-
-				  clearBuffer(adc_data_buf,33);
-
-				  adc_data_buf[1] = photodetector_offset_val;
-				  adc_data_buf[2] = photodetector_offset_val >> 8;
-				  adc_data_buf[3] = photodetector_offset_val >> 16;
-
-				  adc_data_buf[4] = adc_data_buf[1];
-				  adc_data_buf[5] = adc_data_buf[2];
-				  adc_data_buf[6] = adc_data_buf[3];
-
-				  data_status = _READY_;
-				  end_calibration_flag = 1;
-
-			  }
-		  }
-
-		  if (end_calibration_flag) {
-			  if (data_status == NONE_){
-				  cur_action = NONE;
-				  ready_status = READY_;
-				  end_calibration_flag = 0;
-			  }
-		  }
-	  }
-
-	  uart1_rx_complete = 0;
-
-	}
-
-	// the handler of the received message from the encoder 1
-	if (spi4_rx_complete) {
-
-	  switch(cur_action) {
-	  case TEST_ANGLE_OFFSET:
-		  handleTestAngleOffset();
-		  break;
-	  case TEST_ROTATION:
-	// only for previous desktop app
-		 // handleMovingToStartOffset();
-		  break;
-	  case MOVING:
-		  handleMovingToStartOffset(); //right version
-		  break;
-	  case HORIZONTAL:
-		  handleHorizontalMeasurement();
-		  break;
-	  case VERTICAL:
-		  //handleVerticalMeasurement();
-		  handleHorizontalMeasurement();
-		  break;
-	  case HEMISPHERE:
-		  break;
-	  case CALIBRATION:
-		  break;
-	  default:
-		  break;
-	  }
-	  spi4_rx_complete = 0;
-	}
-
-	// the handler of the received message from the encoder 2
-
-	if (spi3_rx_complete) {
-
-	  switch(cur_action) {
-	  case TEST_ANGLE_OFFSET:
-		  handleTestAngleOffset();
-		  break;
-	  case TEST_ROTATION:
-	// only for previous desktop app
-		  //handleMovingToStartOffset();
-		  break;
-	  case MOVING:
-		  handleMovingToStartOffset(); //right version
-		  break;
-	  case HORIZONTAL:
-		  handleHorizontalMeasurementVertPlatf();
-		  break;
-	  case VERTICAL:
-		  handleVerticalMeasurement();
-		  break;
-	  case HEMISPHERE:
-		  break;
-	  case CALIBRATION:
-		  break;
-	  default:
-		  break;
-	  }
-	  spi3_rx_complete = 0;
-	}
-
-*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
