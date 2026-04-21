@@ -34,7 +34,6 @@ void initStaticMeasurement();
 void initTestRotation(uint8_t lsb_angle, uint8_t msb_angle, uint8_t type);
 void handleTestRotation();
 void setActivePlatform(uint8_t platf_id);
-void savePhotodetectorData();
 bool isPlatformReachStartPosition();
 bool isPlatformReachEndPosition();
 bool isPlatformReachTestPosition();

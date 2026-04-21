@@ -8,19 +8,22 @@ C_SRCS += \
 ../Logic\ layer/MeasurementController.c \
 ../Logic\ layer/PC_Protocol.c \
 ../Logic\ layer/PhotodetectorController.c \
-../Logic\ layer/Platform.c 
+../Logic\ layer/Platform.c \
+../Logic\ layer/RingBuffer.c 
 
 OBJS += \
 ./Logic\ layer/MeasurementController.o \
 ./Logic\ layer/PC_Protocol.o \
 ./Logic\ layer/PhotodetectorController.o \
-./Logic\ layer/Platform.o 
+./Logic\ layer/Platform.o \
+./Logic\ layer/RingBuffer.o 
 
 C_DEPS += \
 ./Logic\ layer/MeasurementController.d \
 ./Logic\ layer/PC_Protocol.d \
 ./Logic\ layer/PhotodetectorController.d \
-./Logic\ layer/Platform.d 
+./Logic\ layer/Platform.d \
+./Logic\ layer/RingBuffer.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -32,11 +35,13 @@ Logic\ layer/PhotodetectorController.o: ../Logic\ layer/PhotodetectorController.
 	arm-none-eabi-gcc "$<" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F722xx -c -I../Core/Inc -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Photodetector" -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Timer" -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/PC_Communication" -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Motor" -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Encoder" -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic layer" -I../Drivers/STM32F7xx_HAL_Driver/Inc -I../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Logic layer/PhotodetectorController.d" -MT"$@" --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 Logic\ layer/Platform.o: ../Logic\ layer/Platform.c Logic\ layer/subdir.mk
 	arm-none-eabi-gcc "$<" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F722xx -c -I../Core/Inc -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Photodetector" -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Timer" -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/PC_Communication" -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Motor" -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Encoder" -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic layer" -I../Drivers/STM32F7xx_HAL_Driver/Inc -I../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Logic layer/Platform.d" -MT"$@" --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
+Logic\ layer/RingBuffer.o: ../Logic\ layer/RingBuffer.c Logic\ layer/subdir.mk
+	arm-none-eabi-gcc "$<" -mcpu=cortex-m7 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F722xx -c -I../Core/Inc -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Photodetector" -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Timer" -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/PC_Communication" -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Motor" -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Encoder" -I"C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Logic layer" -I../Drivers/STM32F7xx_HAL_Driver/Inc -I../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Logic layer/RingBuffer.d" -MT"$@" --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -o "$@"
 
 clean: clean-Logic-20-layer
 
 clean-Logic-20-layer:
-	-$(RM) ./Logic\ layer/MeasurementController.cyclo ./Logic\ layer/MeasurementController.d ./Logic\ layer/MeasurementController.o ./Logic\ layer/MeasurementController.su ./Logic\ layer/PC_Protocol.cyclo ./Logic\ layer/PC_Protocol.d ./Logic\ layer/PC_Protocol.o ./Logic\ layer/PC_Protocol.su ./Logic\ layer/PhotodetectorController.cyclo ./Logic\ layer/PhotodetectorController.d ./Logic\ layer/PhotodetectorController.o ./Logic\ layer/PhotodetectorController.su ./Logic\ layer/Platform.cyclo ./Logic\ layer/Platform.d ./Logic\ layer/Platform.o ./Logic\ layer/Platform.su
+	-$(RM) ./Logic\ layer/MeasurementController.cyclo ./Logic\ layer/MeasurementController.d ./Logic\ layer/MeasurementController.o ./Logic\ layer/MeasurementController.su ./Logic\ layer/PC_Protocol.cyclo ./Logic\ layer/PC_Protocol.d ./Logic\ layer/PC_Protocol.o ./Logic\ layer/PC_Protocol.su ./Logic\ layer/PhotodetectorController.cyclo ./Logic\ layer/PhotodetectorController.d ./Logic\ layer/PhotodetectorController.o ./Logic\ layer/PhotodetectorController.su ./Logic\ layer/Platform.cyclo ./Logic\ layer/Platform.d ./Logic\ layer/Platform.o ./Logic\ layer/Platform.su ./Logic\ layer/RingBuffer.cyclo ./Logic\ layer/RingBuffer.d ./Logic\ layer/RingBuffer.o ./Logic\ layer/RingBuffer.su
 
 .PHONY: clean-Logic-20-layer
 

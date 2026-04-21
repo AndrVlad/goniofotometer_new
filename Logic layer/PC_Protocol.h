@@ -20,10 +20,12 @@
 #define SET_PLATFORM_OFFSET			0x17
 #define START_ADC_CALIBRATION		0x1A
 
+#define ADC_CRC_ERROR				0x02
+
 bool isADCDataAvailable();
 void parserCMD();
 void setError(uint8_t error_code);
 void saveOffsetData(uint32_t);
-
+void savePhotodetectorData();
 
 #endif

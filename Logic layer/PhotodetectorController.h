@@ -13,5 +13,6 @@ bool isCalibrationEnd();
 bool isCalibrationSuccess();
 void initADCCalibration();
 uint8_t* getADCValue();
+void pollPD();
 
 #endif /* PHOTODETECTORCONTROLLER_H_ */

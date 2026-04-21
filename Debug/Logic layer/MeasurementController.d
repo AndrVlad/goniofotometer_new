@@ -37,7 +37,8 @@ Logic layer/MeasurementController.o: \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h \
  C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Motor/Motor.h \
  ../Core/Inc/FSMGonio.h ../Logic\ layer/PC_Protocol.h \
- C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Photodetector/Photodetector.h
+ C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Photodetector/Photodetector.h \
+ ../Logic\ layer/RingBuffer.h
 ../Logic\ layer/MeasurementController.h:
 ../Logic\ layer/Platform.h:
 C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Encoder/Encoder.h:
@@ -79,3 +80,4 @@ C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Motor/Mo
 ../Core/Inc/FSMGonio.h:
 ../Logic\ layer/PC_Protocol.h:
 C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Photodetector/Photodetector.h:
+../Logic\ layer/RingBuffer.h:

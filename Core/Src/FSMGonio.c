@@ -34,20 +34,12 @@ void dispatchFSMGlobal() {
 			parserCMD();
 		}
 
-		if (spi3_rx_complete || spi4_rx_complete) {
-			spi3_rx_complete = spi4_rx_complete = 0;
-		}
-
 		break;
 	case DYNAMIC_MEASUREMENT_STATE:
 
 		if (uart3_rx_complete) {
 			uart3_rx_complete = 0;
 			parserCMD();
-		}
-
-		if (spi3_rx_complete || spi4_rx_complete) {
-			spi3_rx_complete = spi4_rx_complete = 0;
 		}
 
 		dispatchDynamicMeasurement();
@@ -57,10 +49,6 @@ void dispatchFSMGlobal() {
 		if (uart3_rx_complete) {
 			uart3_rx_complete = 0;
 			parserCMD();
-		}
-
-		if (spi3_rx_complete || spi4_rx_complete) {
-			spi3_rx_complete = spi4_rx_complete = 0;
 		}
 
 		dispatchStaticMeasurement();
@@ -75,19 +63,11 @@ void dispatchFSMGlobal() {
 			parserCMD();
 		}
 
-		if (spi3_rx_complete || spi4_rx_complete) {
-			spi3_rx_complete = spi4_rx_complete = 0;
-		}
-
 		break;
 	case CALIBRATION_STATE:
 
 		if (uart3_rx_complete) {
 			parserCMD();
-		}
-
-		if (spi3_rx_complete || spi4_rx_complete) {
-			spi3_rx_complete = spi4_rx_complete = 0;
 		}
 
 		dispatchCalibration();
@@ -102,10 +82,6 @@ void dispatchFSMGlobal() {
 		if (uart3_rx_complete) {
 			uart3_rx_complete = 0;
 			parserCMD();
-		}
-
-		if (spi3_rx_complete || spi4_rx_complete) {
-			spi3_rx_complete = spi4_rx_complete = 0;
 		}
 
 		dispatchTestRotation();

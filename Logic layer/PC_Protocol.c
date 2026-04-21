@@ -5,8 +5,10 @@
 #include "Timer.h"
 #include "PhotodetectorController.h"
 #include "Platform.h"
+#include "RingBuffer.h"
 #include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
 
 enum status_current_action_t {
 	NONE,
@@ -35,14 +37,25 @@ enum data_status_t {
 	DATA_READY_NOT_COMPLETELY
 };
 
+typedef struct {
+	uint8_t buf[ADC_BUF_LEN];
+	int16_t write_ptr;
+	int16_t read_ptr;
+} ring_buf_t;
+
+ring_buf_t adc_buf = {.read_ptr = 0, .write_ptr = 0};
+
 uint8_t cmd_buf[CMD_FRAME_LEN] = {0};
 uint8_t* cmd_buf_ptr = NULL;
-uint8_t response_buf[RESPONSE_FRAME_LEN];
+uint8_t response_buf[RESPONSE_FRAME_LEN], safe_response_buf[RESPONSE_FRAME_LEN];
+uint8_t adc_val_ring_buf[ADC_BUF_LEN];
 enum status_current_action_t cur_action = NONE;
 enum work_status_t work_status = READY_STATUS;
 enum data_status_t data_status = DATA_NOT_READY;
 bool transition_state, stop_poll_PD = 0;
 uint8_t last_error_code = 0;
+
+uint8_t getDataStatus();
 
 void saveOffsetCalibrationData(uint32_t offset) {
 	return;
@@ -75,6 +88,7 @@ void sendErrorResponse() {
 	response_buf[0] = response_buf[31] = CRC_ERROR;
 
 	sendAnswerToPC(response_buf, RESPONSE_FRAME_LEN);
+	memcpy(safe_response_buf,response_buf,RESPONSE_FRAME_LEN);
 	return;
 };
 
@@ -85,6 +99,7 @@ void sendErrorResponseCode() {
 	response_buf[1] = response_buf[32] = last_error_code;
 
 	sendAnswerToPC(response_buf, RESPONSE_FRAME_LEN);
+	memcpy(safe_response_buf,response_buf,RESPONSE_FRAME_LEN);
 	return;
 };
 
@@ -101,9 +116,9 @@ uint8_t getWorkStatus() {
 	return work_status;
 };
 
-uint8_t getADCDataStatus() {
-
-	return data_status;
+void setADCDataStatus(data_status_t status) {
+	data_status = status;
+	return;
 }
 
 uint8_t getCurrentAction() {
@@ -132,7 +147,7 @@ void sendResponseOnCMD(uint8_t cmd_code, enum response_t response) {
 		response_buf[1] = getWorkStatus();
 		response_buf[2] = getCurrentAction();
 		response_buf[3] = transition_state;
-		response_buf[4] = getADCDataStatus();
+		response_buf[4] = getDataStatus();
 		response_buf[6] = pd_data[0];
 		response_buf[7] = pd_data[1];
 		response_buf[8] = pd_data[2];
@@ -158,16 +173,41 @@ void sendResponseOnCMD(uint8_t cmd_code, enum response_t response) {
 	*(uint16_t*)(response_buf+31) = crc;
 
 	sendAnswerToPC(response_buf, RESPONSE_FRAME_LEN);
-
+	memcpy(safe_response_buf,response_buf,RESPONSE_FRAME_LEN);
 	return;
 }
 
 void sendPreviousResponse() {
+	sendAnswerToPC(safe_response_buf, RESPONSE_FRAME_LEN);
 	return;
 };
 
+void savePhotodetectorData() {
+	uint8_t* adc_val = getADCValue();
+	saveToRingBuf(adc_val,3);
+	return;
+};
+
+uint8_t getDataStatus() {
+	if (getAvailableNumRingBuf() >= 30) {
+		data_status = DATA_READY_FULL;
+	}
+
+	if (getAvailableNumRingBuf() != 0 && getFSMActionState == WAITING) {
+		data_status = DATA_READY_NOT_COMPLETELY;
+	}
+
+	if(getAvailableNumRingBuf() == 0) {
+		data_status = DATA_NOT_READY;
+	};
+	return data_status;
+}
+
 bool isADCDataAvailable() {
-	return true;
+	if (data_status == DATA_READY_FULL || data_status == DATA_READY_NOT_COMPLETELY) {
+		return true;
+	}
+	return false;
 }
 
 void parserCMD() {
@@ -189,7 +229,7 @@ void parserCMD() {
 		pollEncoder(1);
 
 		if (!stop_poll_PD) {
-			getADCValue();
+			pollPD();
 		}
 
 		sendResponseOnCMD(GET_STATUS, CMD_ACCEPTED);

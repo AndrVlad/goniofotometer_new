@@ -37,3 +37,4 @@
 "./Logic layer/PC_Protocol.o"
 "./Logic layer/PhotodetectorController.o"
 "./Logic layer/Platform.o"
+"./Logic layer/RingBuffer.o"

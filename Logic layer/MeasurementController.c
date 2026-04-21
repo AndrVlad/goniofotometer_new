@@ -4,6 +4,7 @@
 #include "Platform.h"
 #include "Encoder.h"
 #include "Photodetector.h"
+#include "RingBuffer.h"
 #include <stdbool.h>
 #include <stdlib.h>
 
@@ -114,6 +115,8 @@ void initDynamicMeasurement(enum meas_type_t meas_type, uint16_t start_angle_ite
 
 	uint16_t accel_angle, start_angle, end_angle, step;
 
+	clearRingBuf();
+
 	if (meas_type == MERIDIONAL) {
 		setActivePlatform(VERTICAL_PL);
 	}
@@ -194,10 +197,6 @@ void initTestRotation(uint8_t lsb_angle, uint8_t msb_angle, uint8_t type) {
 
 	setPlatformDirection(measurement.test_pos);
 	startPlatformRotation();
-	return;
-};
-
-void savePhotodetectorData() {
 	return;
 };
 
