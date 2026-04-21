@@ -37,14 +37,6 @@ enum data_status_t {
 	DATA_READY_NOT_COMPLETELY
 };
 
-typedef struct {
-	uint8_t buf[ADC_BUF_LEN];
-	int16_t write_ptr;
-	int16_t read_ptr;
-} ring_buf_t;
-
-ring_buf_t adc_buf = {.read_ptr = 0, .write_ptr = 0};
-
 uint8_t cmd_buf[CMD_FRAME_LEN] = {0};
 uint8_t* cmd_buf_ptr = NULL;
 uint8_t response_buf[RESPONSE_FRAME_LEN], safe_response_buf[RESPONSE_FRAME_LEN];
