@@ -2,8 +2,7 @@ Logic layer/PC_Protocol.o: ../Logic\ layer/PC_Protocol.c \
  ../Core/Inc/FSMGonio.h ../Logic\ layer/PC_Protocol.h \
  ../Logic\ layer/MeasurementController.h ../Logic\ layer/Platform.h \
  C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Encoder/Encoder.h \
- C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Motor/Motor.h \
- ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h \
+ ../Core/Inc/Common.h ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h \
  ../Core/Inc/stm32f7xx_hal_conf.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_rcc.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_def.h \
@@ -36,6 +35,7 @@ Logic layer/PC_Protocol.o: ../Logic\ layer/PC_Protocol.c \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h \
+ C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Motor/Motor.h \
  C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/PC_Communication/PC_Communication.h \
  C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Timer/Timer.h \
  ../Logic\ layer/PhotodetectorController.h
@@ -44,7 +44,7 @@ Logic layer/PC_Protocol.o: ../Logic\ layer/PC_Protocol.c \
 ../Logic\ layer/MeasurementController.h:
 ../Logic\ layer/Platform.h:
 C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Encoder/Encoder.h:
-C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Motor/Motor.h:
+../Core/Inc/Common.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h:
 ../Core/Inc/stm32f7xx_hal_conf.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_rcc.h:
@@ -78,6 +78,7 @@ C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Motor/Mo
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h:
+C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Motor/Motor.h:
 C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/PC_Communication/PC_Communication.h:
 C:/Users/Admin/STM32CubeIDE/workspace_1.12.0/goniofotometer_new/Drivers/Timer/Timer.h:
 ../Logic\ layer/PhotodetectorController.h:

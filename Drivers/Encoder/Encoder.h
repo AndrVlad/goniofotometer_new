@@ -6,6 +6,7 @@
  */
 
 #include <stdint.h>
+#include "Common.h"
 
 #ifndef ENCODER_ENCODER_H_
 #define ENCODER_ENCODER_H_
@@ -19,6 +20,9 @@ typedef struct  {
 
 extern encoder_t h_encoder, v_encoder;
 
-void setEncoderPollFrequency(encoder_t* encoder, uint16_t poll_freq);
+void setEncoderPollFrequency(uint16_t poll_freq);
+void startPollingEncoder();
+void pollEncoder(uint8_t encoder_num);
+uint32_t getInvVal(uint8_t encoder_num);
 
 #endif /* ENCODER_ENCODER_H_ */

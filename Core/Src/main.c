@@ -103,6 +103,10 @@ void globalInit() {
 	return;
 }
 
+void resetGonio() {
+	return;
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -163,6 +167,11 @@ int main(void)
 	HAL_IWDG_Refresh(&hiwdg);
 	// вход в диспетчер машины состояний
 	dispatchFSMGlobal();
+
+	if (tim11_ovflw) {
+		resetGonio();
+		tim11_ovflw = 0;
+	}
 
     /* USER CODE END WHILE */
 

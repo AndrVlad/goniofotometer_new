@@ -14,3 +14,4 @@
 ../Logic layer/Platform.c:97:6:invertPlatformDirection	8	static
 ../Logic layer/Platform.c:106:10:getOffsetPosition	16	static
 ../Logic layer/Platform.c:110:10:getInvertedEncoderVal	16	static
+../Logic layer/Platform.c:118:6:updateEncoderVal	16	static

@@ -18,6 +18,7 @@ void decelerateMotor(motor_t* motor) {
 }
 
 bool isMotorStopped(motor_t* motor) {
+
     return true;
 }
 
@@ -30,6 +31,7 @@ void setMotorFrequency(motor_t* motor, uint16_t freq) {
 }
 
 void startMotorRotation(motor_t* motor) {
+
 	return;
 }
 

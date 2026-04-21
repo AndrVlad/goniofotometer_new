@@ -41,13 +41,17 @@ uint8_t response_buf[RESPONSE_FRAME_LEN];
 enum status_current_action_t cur_action = NONE;
 enum work_status_t work_status = READY_STATUS;
 enum data_status_t data_status = DATA_NOT_READY;
-bool transition_state = 0;
+bool transition_state, stop_poll_PD = 0;
+uint8_t last_error_code = 0;
 
-void saveOffsetData(uint32_t data) {
+void saveOffsetCalibrationData(uint32_t offset) {
 	return;
 }
 
 void setError(uint8_t error_code) {
+	last_error_code = error_code;
+	setFSMGlobalState(ERROR_STATE);
+	work_status = ERROR_STATUS;
 	return;
 }
 
@@ -74,9 +78,38 @@ void sendErrorResponse() {
 	return;
 };
 
+void sendErrorResponseCode() {
+	clearBuffer(response_buf,RESPONSE_FRAME_LEN);
+
+	response_buf[0] = response_buf[31] = GET_ERROR_CODE;
+	response_buf[1] = response_buf[32] = last_error_code;
+
+	sendAnswerToPC(response_buf, RESPONSE_FRAME_LEN);
+	return;
+};
+
 void stopUpdatePDData() {
+	stop_poll_PD = true;
 	return;
 }
+
+void resetUpdatePDData() {
+	stop_poll_PD = false;
+}
+
+uint8_t getWorkStatus() {
+	return work_status;
+};
+
+uint8_t getADCDataStatus() {
+
+	return data_status;
+}
+
+uint8_t getCurrentAction() {
+	uint8_t action = 0;
+	return action;
+};
 
 void sendResponseOnCMD(uint8_t cmd_code, enum response_t response) {
 
@@ -99,7 +132,7 @@ void sendResponseOnCMD(uint8_t cmd_code, enum response_t response) {
 		response_buf[1] = getWorkStatus();
 		response_buf[2] = getCurrentAction();
 		response_buf[3] = transition_state;
-		response_buf[4] = (uint8_t)data_status;
+		response_buf[4] = getADCDataStatus();
 		response_buf[6] = pd_data[0];
 		response_buf[7] = pd_data[1];
 		response_buf[8] = pd_data[2];
@@ -151,9 +184,19 @@ void parserCMD() {
 		sendPreviousResponse();
 		break;
 	case GET_STATUS:
+
+		pollEncoder(0);
+		pollEncoder(1);
+
+		if (!stop_poll_PD) {
+			getADCValue();
+		}
+
 		sendResponseOnCMD(GET_STATUS, CMD_ACCEPTED);
+
 		break;
 	case EQUATORIAL_MEASUREMENT:
+
 		sendResponseOnCMD(EQUATORIAL_MEASUREMENT, CMD_ACCEPTED);
 		stopUpdatePDData();
 		initDynamicMeasurement(EQUATORIAL,cmd_buf[1],cmd_buf[2],cmd_buf[3]);
@@ -182,10 +225,10 @@ void parserCMD() {
 		//sendDataPacket();
 		break;
 	case GET_ERROR_CODE:
-		//sendErrorPacket();
+		sendErrorResponseCode();
 		cur_action = NONE_ACTION;
 		work_status = READY_STATUS;
-		setFSMGlobalState(INIT_STATE);
+		setFSMGlobalState(IDLE_STATE);
 		setFSMActionState(NONE_ACTION);
 		break;
 	case TEST_ANGLE_ROTATION:
@@ -197,7 +240,7 @@ void parserCMD() {
 	case SET_ADC_PARAMS:
 		sendResponseOnCMD(SET_ADC_PARAMS, CMD_ACCEPTED);
 		stopUpdatePDData();
-		//initSettingADC();
+		setParamsADC(cmd_buf[1], cmd_buf[2]);
 		cur_action = CALIBRATION;
 		work_status = BUSY_STATUS;
 		break;

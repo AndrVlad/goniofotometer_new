@@ -15,6 +15,7 @@ uint8_t calibration_buffer[CALIB_DATA_SAMPLES_NUM], adc_values_buf[CALIB_DATA_SA
 bool checkCRCPhotodetectorData(uint8_t* data_buf);
 
 uint8_t* getADCValue() {
+	pollPhotodetector();
 	uint8_t* pd_data;
 	if(checkCRCPhotodetectorData(getPDData())) {
 		return pd_data;
@@ -185,7 +186,7 @@ void handleCalibration() {
 	} else {
 		stopCalibrationTimer();
 		uint32_t pd_offset_val = getPDOffsetVal();
-		saveOffsetData(pd_offset_val);
+		saveOffsetCalibrationData(pd_offset_val);
 	}
 
 	return;

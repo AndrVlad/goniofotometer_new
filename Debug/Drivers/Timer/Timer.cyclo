@@ -1,3 +1,6 @@
 Timer.c:8:6:resetKeepAliveTimer	1
 Timer.c:13:6:startCalibrationTimer	1
 Timer.c:16:6:stopCalibrationTimer	1
+Timer.c:20:6:startPollingEncoderTimer	1
+Timer.c:24:6:stopPollingEncoderTimer	1
+Timer.c:29:6:setEncoderTimerParams	1

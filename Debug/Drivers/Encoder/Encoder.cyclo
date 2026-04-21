@@ -1,1 +1,6 @@
-Encoder.c:11:6:setEncoderPollFrequency	1
+Encoder.c:16:6:pollEncoder	2
+Encoder.c:24:10:getInvVal	2
+Encoder.c:32:6:startPollingEncoder	1
+Encoder.c:36:6:stopPollingEncoder	1
+Encoder.c:41:6:setEncoderPollFrequency	1
+Encoder.c:47:6:HAL_SPI_RxCpltCallback	3

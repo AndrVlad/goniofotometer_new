@@ -1,3 +1,6 @@
 ../Drivers/Timer/Timer.c:8:6:resetKeepAliveTimer	4	static
 ../Drivers/Timer/Timer.c:13:6:startCalibrationTimer	4	static
 ../Drivers/Timer/Timer.c:16:6:stopCalibrationTimer	4	static
+../Drivers/Timer/Timer.c:20:6:startPollingEncoderTimer	8	static
+../Drivers/Timer/Timer.c:24:6:stopPollingEncoderTimer	8	static
+../Drivers/Timer/Timer.c:29:6:setEncoderTimerParams	16	static

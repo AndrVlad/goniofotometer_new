@@ -50,19 +50,19 @@ void setPlatformSpeed(uint32_t step) {
 	case 365:
 	case 182:
 		setMotorFrequency(current_platform->motor, 407);
-		setEncoderPollFrequency(current_platform->encoder,200);
+		setEncoderPollFrequency(200);
 		break;
 	case 60: // разрешение 10 минут
 		setMotorFrequency(current_platform->motor, 163);
-		setEncoderPollFrequency(current_platform->encoder,1000);
+		setEncoderPollFrequency(1000);
 		break;
 	case 29: // разрешение 5 минут
 		setMotorFrequency(current_platform->motor, 115);
-		setEncoderPollFrequency(current_platform->encoder,1000);
+		setEncoderPollFrequency(1000);
 		break;
 	case 6: // разрешение 1 минута
 		setMotorFrequency(current_platform->motor, 27);
-		setEncoderPollFrequency(current_platform->encoder,1000);
+		setEncoderPollFrequency(1000);
 		break;
 	}
 	return;
@@ -108,5 +108,14 @@ uint32_t getOffsetPosition(uint8_t platform_num) {
 };
 
 uint32_t getInvertedEncoderVal(uint8_t encoder_num) {
-	return current_platform->encoder->inv_value;
+	if (encoder_num) {
+		return getInvVal(horizontal.encoder);
+	} else {
+		return getInvVal(vertical.encoder);
+	}
+}
+
+void updateEncoderVal(uint8_t encoder_num) {
+	pollEncoder(encoder_num);
+	return;
 }

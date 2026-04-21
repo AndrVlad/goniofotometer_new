@@ -209,8 +209,10 @@ void dispatchCalibration() {
 			uart1_rx_complete = 0;
 			handleCoeffSetting();
 			if (isSuccessCoeffSetting()) {
-				setFSMActionState(NONE_ACTION);
-				setFSMGlobalState(IDLE_STATE);
+				if (!isADCDataAvailable()) {
+					setFSMActionState(NONE_ACTION);
+					setFSMGlobalState(IDLE_STATE);
+				}
 			} else {
 				setFSMActionState(NONE_ACTION);
 				setFSMGlobalState(ERROR_STATE);

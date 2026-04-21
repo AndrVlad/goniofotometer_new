@@ -13,4 +13,5 @@ Platform.c:84:6:stopPlatform	1
 Platform.c:89:6:isPlatformRotationForward	2
 Platform.c:97:6:invertPlatformDirection	2
 Platform.c:106:10:getOffsetPosition	1
-Platform.c:110:10:getInvertedEncoderVal	1
+Platform.c:110:10:getInvertedEncoderVal	2
+Platform.c:118:6:updateEncoderVal	1
