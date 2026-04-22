@@ -27,5 +27,6 @@ void parserCMD();
 void setError(uint8_t error_code);
 void saveOffsetData(uint32_t);
 void savePhotodetectorData();
+void resetProtocolModule();
 
 #endif

@@ -29,5 +29,6 @@ void setFSMGlobalState(uint8_t state);
 void setFSMActionState(uint8_t state);
 uint8_t getFSMActionState();
 uint8_t getFSMGlobalState();
+void resetGonio();
 
 #endif /* INC_FSMGONIO_H_ */

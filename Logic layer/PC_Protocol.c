@@ -49,6 +49,20 @@ uint8_t last_error_code = 0;
 
 uint8_t getDataStatus();
 
+void resetProtocolModule() {
+	clearRingBuf();
+	cur_action = NONE_ACTION;
+	work_status = READY_STATUS;
+};
+
+bool isErrorOccured() {
+	if(work_status == ERROR_STATUS) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 void saveOffsetCalibrationData(uint32_t offset) {
 	uint8_t offset_buf[3] = {0};
 	offset_buf[0] = offset & 0xFF;
@@ -61,7 +75,6 @@ void saveOffsetCalibrationData(uint32_t offset) {
 
 void setError(uint8_t error_code) {
 	last_error_code = error_code;
-	setFSMGlobalState(ERROR_STATE);
 	work_status = ERROR_STATUS;
 	return;
 }
@@ -299,9 +312,7 @@ void parserCMD() {
 		break;
 	case EMERGENCY_STOP:
 		sendResponseOnCMD(EMERGENCY_STOP, CMD_ACCEPTED);
-		//stopCurrentAction();
-		cur_action = NONE_ACTION;
-		work_status = READY_STATUS;
+		resetProtocolModule();
 		break;
 	case GET_ADC_DATA:
 		sendDataPacket();

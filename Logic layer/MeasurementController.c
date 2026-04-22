@@ -222,3 +222,9 @@ bool isPlatformReachEndPosition() {
 bool isPlatformReachTestPosition() {
 	return reach_test_position;
 }
+
+void stopMeasurement() {
+	stopPlatforms();
+	stopResolutionTimer();
+	stopIntervalTimer();
+}

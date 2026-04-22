@@ -23,6 +23,7 @@ void setPlatformDirection(uint32_t target_position);
 void invertPlatformDirection();
 void startPlatformRotation();
 void stopPlatform();
+void stopPlatforms();
 
 bool isPlatformStopped();
 bool isPlatformAccelerated();

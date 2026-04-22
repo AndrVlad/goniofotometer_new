@@ -86,6 +86,11 @@ void stopPlatform() {
 	return;
 }
 
+void stopPlatforms() {
+	stopMotorRotation(horizontal.motor);
+	stopMotorRotation(vertical.motor);
+}
+
 bool isPlatformRotationForward() {
 	if(getMotorDirection(current_platform->motor) == FORWARD) {
 		return true;

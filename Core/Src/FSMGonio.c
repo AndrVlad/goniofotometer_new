@@ -29,7 +29,19 @@ void setFSMActionState(uint8_t state) {
 	curActionState = state;
 }
 
+void resetGonio() {
+	setFSMGlobalState(ERROR_STATE);
+	setFSMActionState(NONE_ACTION);
+	stopMeasurement();
+	resetProtocolModule();
+};
+
 void dispatchFSMGlobal() {
+
+	if(isErrorOccured()) {
+		resetGonio();
+	}
+
 	switch(curStateGlobal) {
 	case IDLE_STATE:
 
@@ -226,15 +238,11 @@ void dispatchCalibration() {
 		if (uart1_rx_complete) {
 			uart1_rx_complete = 0;
 			handleCoeffSetting();
-			if (isSuccessCoeffSetting()) {
-				if (!isADCDataAvailable()) {
-					setFSMActionState(NONE_ACTION);
-					setFSMGlobalState(IDLE_STATE);
-				}
-			} else {
+			if (!isADCDataAvailable()) {
 				setFSMActionState(NONE_ACTION);
-				setFSMGlobalState(ERROR_STATE);
+				setFSMGlobalState(IDLE_STATE);
 			}
+
 		}
 		break;
 	case ACCUMULATION_PD_DATA:
@@ -248,14 +256,10 @@ void dispatchCalibration() {
 			handleCalibration();
 		}
 
-		if (isCalibrationEnd()) {
-			if (isCalibrationSuccess()) {
-				setFSMActionState(WAITING);
-			} else {
-				setFSMActionState(NONE_ACTION);
-				setFSMGlobalState(ERROR_STATE);
-			}
+		if (isCalibrationEnd() && isADCDataAvailable()) {
+			setFSMActionState(WAITING);
 		}
+
 		break;
 	case WAITING:
 		if (!isADCDataAvailable()) {

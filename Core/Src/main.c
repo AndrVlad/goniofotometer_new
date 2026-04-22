@@ -99,14 +99,6 @@ static void MX_IWDG_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-void globalInit() {
-	return;
-}
-
-void resetGonio() {
-	return;
-}
-
 /* USER CODE END 0 */
 
 /**
@@ -155,8 +147,7 @@ int main(void)
   MX_TIM12_Init();
   MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
-  // глобальная инициализация блока управления
-  globalInit();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -168,6 +159,7 @@ int main(void)
 	// вход в диспетчер машины состояний
 	dispatchFSMGlobal();
 
+	// проверка keep-alive таймера
 	if (tim11_ovflw) {
 		resetGonio();
 		tim11_ovflw = 0;

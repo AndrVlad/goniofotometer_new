@@ -9,3 +9,4 @@ MeasurementController.c:193:6:initTestRotation	2
 MeasurementController.c:214:6:isPlatformReachStartPosition	1
 MeasurementController.c:218:6:isPlatformReachEndPosition	1
 MeasurementController.c:222:6:isPlatformReachTestPosition	1
+MeasurementController.c:226:6:stopMeasurement	1

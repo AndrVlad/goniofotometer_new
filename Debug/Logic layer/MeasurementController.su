@@ -9,3 +9,4 @@
 ../Logic layer/MeasurementController.c:214:6:isPlatformReachStartPosition	4	static
 ../Logic layer/MeasurementController.c:218:6:isPlatformReachEndPosition	4	static
 ../Logic layer/MeasurementController.c:222:6:isPlatformReachTestPosition	4	static
+../Logic layer/MeasurementController.c:226:6:stopMeasurement	8	static
