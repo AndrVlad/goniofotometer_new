@@ -13,6 +13,14 @@ void dispatchTestRotation();
 enum FSMGlobalState curStateGlobal = INIT_STATE;
 enum FSMActionState curActionState = NONE_ACTION;
 
+uint8_t getFSMActionState() {
+	return curActionState;
+}
+
+uint8_t getFSMGlobalState() {
+	return curStateGlobal;
+}
+
 void setFSMGlobalState(uint8_t state) {
 	curStateGlobal = state;
 }
@@ -157,7 +165,13 @@ void dispatchDynamicMeasurement() {
 			savePhotodetectorData();
 		}
 		if (isPlatformStopped() && isADCDataAvailable()) {
-			setFSMActionState(WAITING);
+			if (isADCDataAvailable()) {
+				setFSMActionState(WAITING);
+			} else {
+				setFSMGlobalState(IDLE_STATE);
+				setFSMActionState(NONE_ACTION);
+			}
+
 		} else {
 			if (tim12_ovflw) {
 				tim12_ovflw = 0;
@@ -175,6 +189,34 @@ void dispatchDynamicMeasurement() {
 }
 
 void dispatchStaticMeasurement() {
+
+	switch(curActionState) {
+	case POLL_PD:
+		if (tim14_ovflw) {
+			pollPD();
+		}
+
+		if (uart1_rx_complete) {
+			uart1_rx_complete = 0;
+			savePhotodetectorData();
+		}
+
+		if (tim5_ovflw) {
+			setFSMActionState(WAITING);
+		}
+		break;
+	case WAITING:
+		if (uart1_rx_complete) {
+			uart1_rx_complete = 0;
+			savePhotodetectorData();
+		}
+
+		if (!isADCDataAvailable()) {
+			setFSMGlobalState(IDLE_STATE);
+			setFSMActionState(NONE_ACTION);
+		}
+		break;
+	}
 	return;
 }
 

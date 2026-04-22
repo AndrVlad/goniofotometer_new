@@ -1,0 +1,4 @@
+../Logic layer/RingBuffer.c:13:6:saveToRingBuf	24	static
+../Logic layer/RingBuffer.c:25:6:clearRingBuf	4	static
+../Logic layer/RingBuffer.c:29:10:getAvailableNumRingBuf	16	static
+../Logic layer/RingBuffer.c:53:6:readRingBuf	24	static

@@ -1,7 +1,9 @@
-../Core/Src/FSMGonio.c:16:6:setFSMGlobalState	16	static
-../Core/Src/FSMGonio.c:20:6:setFSMActionState	16	static
-../Core/Src/FSMGonio.c:24:6:dispatchFSMGlobal	8	static
-../Core/Src/FSMGonio.c:93:6:dispatchTestRotation	8	static
-../Core/Src/FSMGonio.c:123:6:dispatchDynamicMeasurement	8	static
-../Core/Src/FSMGonio.c:177:6:dispatchStaticMeasurement	4	static
-../Core/Src/FSMGonio.c:181:6:dispatchCalibration	8	static
+../Core/Src/FSMGonio.c:16:9:getFSMActionState	4	static
+../Core/Src/FSMGonio.c:20:9:getFSMGlobalState	4	static
+../Core/Src/FSMGonio.c:24:6:setFSMGlobalState	16	static
+../Core/Src/FSMGonio.c:28:6:setFSMActionState	16	static
+../Core/Src/FSMGonio.c:32:6:dispatchFSMGlobal	8	static
+../Core/Src/FSMGonio.c:101:6:dispatchTestRotation	8	static
+../Core/Src/FSMGonio.c:131:6:dispatchDynamicMeasurement	8	static
+../Core/Src/FSMGonio.c:191:6:dispatchStaticMeasurement	8	static
+../Core/Src/FSMGonio.c:223:6:dispatchCalibration	8	static

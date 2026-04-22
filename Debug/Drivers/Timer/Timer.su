@@ -3,4 +3,10 @@
 ../Drivers/Timer/Timer.c:16:6:stopCalibrationTimer	4	static
 ../Drivers/Timer/Timer.c:20:6:startPollingEncoderTimer	8	static
 ../Drivers/Timer/Timer.c:24:6:stopPollingEncoderTimer	8	static
-../Drivers/Timer/Timer.c:29:6:setEncoderTimerParams	16	static
+../Drivers/Timer/Timer.c:29:6:startIntervalTimer	8	static
+../Drivers/Timer/Timer.c:33:6:stopIntervalTimer	8	static
+../Drivers/Timer/Timer.c:38:6:startResolutionTimer	8	static
+../Drivers/Timer/Timer.c:42:6:stopResolutionTimer	8	static
+../Drivers/Timer/Timer.c:47:6:setEncoderTimerParams	16	static
+../Drivers/Timer/Timer.c:51:6:setTimeIntervalTimerParams	16	static
+../Drivers/Timer/Timer.c:55:6:setTimeResolutionTimerParams	16	static

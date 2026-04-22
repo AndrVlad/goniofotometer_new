@@ -3,4 +3,10 @@ Timer.c:13:6:startCalibrationTimer	1
 Timer.c:16:6:stopCalibrationTimer	1
 Timer.c:20:6:startPollingEncoderTimer	1
 Timer.c:24:6:stopPollingEncoderTimer	1
-Timer.c:29:6:setEncoderTimerParams	1
+Timer.c:29:6:startIntervalTimer	1
+Timer.c:33:6:stopIntervalTimer	1
+Timer.c:38:6:startResolutionTimer	1
+Timer.c:42:6:stopResolutionTimer	1
+Timer.c:47:6:setEncoderTimerParams	1
+Timer.c:51:6:setTimeIntervalTimerParams	1
+Timer.c:55:6:setTimeResolutionTimerParams	1

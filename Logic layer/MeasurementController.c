@@ -5,6 +5,7 @@
 #include "Encoder.h"
 #include "Photodetector.h"
 #include "RingBuffer.h"
+#include "Timer.h"
 #include <stdbool.h>
 #include <stdlib.h>
 
@@ -168,9 +169,19 @@ void initDynamicMeasurement(enum meas_type_t meas_type, uint16_t start_angle_ite
 };
 
 void handleStaticMeasurement() {
+
+	 if (tim14_ovflw) {
+		 pollPhotodetector();
+	}
+
 	return;
 }
-void initStaticMeasurement() {
+void initStaticMeasurement(uint8_t interval, uint8_t resolution) {
+
+	// Init of timers
+	setTimeIntervalTimerParams(time_interval_items[interval-1]);
+	setTimeResolutionTimerParams(time_step_items[resolution-1]);
+	startResolutionTimer();
 	return;
 }
 

@@ -24,6 +24,10 @@ uint8_t* getADCValue() {
 	return 0;
 }
 
+void pollPD() {
+	pollPhotodetector();
+}
+
 uint8_t getADCAmplifierValInverted(uint8_t value);
 
 bool checkCRCPhotodetectorData(uint8_t* data_buf) {

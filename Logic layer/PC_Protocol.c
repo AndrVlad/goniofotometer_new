@@ -50,6 +50,12 @@ uint8_t last_error_code = 0;
 uint8_t getDataStatus();
 
 void saveOffsetCalibrationData(uint32_t offset) {
+	uint8_t offset_buf[3] = {0};
+	offset_buf[0] = offset & 0xFF;
+	offset_buf[1] = offset >> 8;
+	offset_buf[2] = offset >> 16;
+	clearRingBuf();
+	saveToRingBuf(offset_buf,3);
 	return;
 }
 
@@ -61,12 +67,17 @@ void setError(uint8_t error_code) {
 }
 
 bool checkCRC(uint8_t* buf) {
-	return true;
+	uint16_t crc = 0, crc_received = 0;
+	for (int i = 0; i < 4; i+=2) {
+		crc += (uint16_t)buf[i] + ((uint16_t)(buf[i+1])<<8);
+	}
+	crc_received = (uint16_t)buf[4] + ((uint16_t)(buf[5])<<8);
+	if (crc_received != crc) {
+        return false;
+	} else {
+		return true;
+	}
 };
-
-void calculateCRC(uint8_t* buf) {
-	return;
-}
 
 void clearBuffer(uint8_t *buf, uint8_t size){
 	for(uint8_t i = 0; i < size-1; i++) {
@@ -102,13 +113,24 @@ void stopUpdatePDData() {
 
 void resetUpdatePDData() {
 	stop_poll_PD = false;
+	return;
 }
 
-uint8_t getWorkStatus() {
-	return work_status;
+void updateWorkStatus() {
+	if (getFSMGlobalState() == IDLE_STATE && getFSMActionState() == NONE_ACTION) {
+		work_status = READY_STATUS;
+		cur_action = NONE;
+		resetUpdatePDData();
+	}
+	if (getFSMGlobalState() == ERROR_STATE) {
+		work_status = ERROR_STATUS;
+		cur_action = NONE;
+		resetUpdatePDData();
+	}
+	return;
 };
 
-void setADCDataStatus(data_status_t status) {
+void setADCDataStatus(enum data_status_t status) {
 	data_status = status;
 	return;
 }
@@ -134,10 +156,11 @@ void sendResponseOnCMD(uint8_t cmd_code, enum response_t response) {
 		uint8_t* pd_data = getADCValue();
 		uint32_t offset1 = getOffsetPosition(0);
 		uint32_t offset2 = getOffsetPosition(1);
+		updateWorkStatus();
 
 		response_buf[0] = GET_STATUS;
-		response_buf[1] = getWorkStatus();
-		response_buf[2] = getCurrentAction();
+		response_buf[1] = work_status;
+		response_buf[2] = cur_action;
 		response_buf[3] = transition_state;
 		response_buf[4] = getDataStatus();
 		response_buf[6] = pd_data[0];
@@ -174,6 +197,24 @@ void sendPreviousResponse() {
 	return;
 };
 
+void sendDataPacket() {
+	clearBuffer(response_buf,RESPONSE_FRAME_LEN);
+	uint32_t crc;
+	readRingBuf(response_buf,1);
+
+	response_buf[0] = GET_ADC_DATA;
+	// CRC calculation
+	for (int i = 0; i < 30; i+=2) {
+		crc += (uint16_t)response_buf[i] + ((uint16_t)(response_buf[i+1])<<8);
+	}
+	crc += response_buf[30];
+	*(uint16_t*)(response_buf+31) = crc;
+
+	sendAnswerToPC(response_buf, RESPONSE_FRAME_LEN);
+	memcpy(safe_response_buf,response_buf,RESPONSE_FRAME_LEN);
+	return;
+}
+
 void savePhotodetectorData() {
 	uint8_t* adc_val = getADCValue();
 	saveToRingBuf(adc_val,3);
@@ -185,13 +226,13 @@ uint8_t getDataStatus() {
 		data_status = DATA_READY_FULL;
 	}
 
-	if (getAvailableNumRingBuf() != 0 && getFSMActionState == WAITING) {
+	if (getAvailableNumRingBuf() != 0 && getFSMActionState() == WAITING) {
 		data_status = DATA_READY_NOT_COMPLETELY;
 	}
 
 	if(getAvailableNumRingBuf() == 0) {
 		data_status = DATA_NOT_READY;
-	};
+	}
 	return data_status;
 }
 
@@ -247,6 +288,15 @@ void parserCMD() {
 		// set status
 		work_status = BUSY_STATUS;
 		break;
+	case STATIC_MEASUREMENT:
+		sendResponseOnCMD(STATIC_MEASUREMENT, CMD_ACCEPTED);
+		stopUpdatePDData();
+		initStaticMeasurement(cmd_buf[1], cmd_buf[2]);
+		// set current action
+		cur_action = STATIC;
+		// set status
+		work_status = BUSY_STATUS;
+		break;
 	case EMERGENCY_STOP:
 		sendResponseOnCMD(EMERGENCY_STOP, CMD_ACCEPTED);
 		//stopCurrentAction();
@@ -254,7 +304,7 @@ void parserCMD() {
 		work_status = READY_STATUS;
 		break;
 	case GET_ADC_DATA:
-		//sendDataPacket();
+		sendDataPacket();
 		break;
 	case GET_ERROR_CODE:
 		sendErrorResponseCode();

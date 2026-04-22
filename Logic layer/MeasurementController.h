@@ -30,12 +30,14 @@ typedef struct {
 void handleDynamicMeasurement();
 void initDynamicMeasurement(enum meas_type_t meas_type, uint16_t start_angle_item, uint16_t end_angle_item, uint16_t step_item);
 void handleStaticMeasurement();
-void initStaticMeasurement();
+void initStaticMeasurement(uint8_t interval, uint8_t resolution);
 void initTestRotation(uint8_t lsb_angle, uint8_t msb_angle, uint8_t type);
 void handleTestRotation();
 void setActivePlatform(uint8_t platf_id);
 bool isPlatformReachStartPosition();
 bool isPlatformReachEndPosition();
 bool isPlatformReachTestPosition();
+void stopDynamicMeasurement();
+void stopStaticMeasurement();
 
 #endif
