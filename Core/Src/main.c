@@ -98,7 +98,9 @@ static void MX_IWDG_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+void resetWatchDogTimer() {
+	HAL_IWDG_Refresh(&hiwdg);
+}
 /* USER CODE END 0 */
 
 /**
@@ -147,7 +149,7 @@ int main(void)
   MX_TIM12_Init();
   MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
-
+  peripheralInit();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -155,7 +157,8 @@ int main(void)
   while (1)
   {
 	// обновление сторожевого таймера
-	HAL_IWDG_Refresh(&hiwdg);
+	resetWatchDogTimer();
+
 	// вход в диспетчер машины состояний
 	dispatchFSMGlobal();
 
