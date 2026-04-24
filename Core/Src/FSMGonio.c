@@ -39,7 +39,8 @@ void resetGonio() {
 void dispatchFSMGlobal() {
 
 	if(isErrorOccured()) {
-		resetGonio();
+		setFSMGlobalState(ERROR_STATE);
+		setFSMActionState(NONE_ACTION);
 	}
 
 	switch(curStateGlobal) {
@@ -113,25 +114,29 @@ void dispatchFSMGlobal() {
 void dispatchTestRotation() {
 	switch (curActionState) {
 	case ACCELERATION:
-		handleTestRotation(); // осуществляет останов и смену состояний.
-		if (isPlatformAccelerated()) {
-			setFSMActionState(MOVING);
-		} else {
+		// вызов обработчика пробного вращения
+		handleTestRotation();
+		if (isPlatformAccelerated()) { 	// платформа разогнана
+			setFSMActionState(MOVING);	// смена состояния
+		} else {	// платформа не разогнана
 			if (tim4_ovflw) {
 				tim4_ovflw = 0;
+				// обработчик увеличения частоты вращения ШД
 				acceleratePlatform();
 			}
 		}
 		break;
 	case MOVING:
-		if(isPlatformReachTestPosition()) {
+		if(isPlatformReachTestPosition()) { // платформа достигла заданной позиции
 			setFSMActionState(DECELERATION);
+			// выполнение остановки платформы
+			stopPlatform();
 		}
 		handleTestRotation();
 		break;
 
 	case DECELERATION:
-		if (isPlatformStopped()) {
+		if (isPlatformStopped()) { // по остановке платформы сбросить состояние и подсостояния
 			setFSMGlobalState(IDLE_STATE);
 			setFSMActionState(NONE_ACTION);
 		}

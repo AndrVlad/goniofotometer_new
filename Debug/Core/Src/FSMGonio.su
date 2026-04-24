@@ -4,7 +4,7 @@
 ../Core/Src/FSMGonio.c:28:6:setFSMActionState	16	static
 ../Core/Src/FSMGonio.c:32:6:resetGonio	8	static
 ../Core/Src/FSMGonio.c:39:6:dispatchFSMGlobal	8	static
-../Core/Src/FSMGonio.c:113:6:dispatchTestRotation	8	static
-../Core/Src/FSMGonio.c:143:6:dispatchDynamicMeasurement	8	static
-../Core/Src/FSMGonio.c:203:6:dispatchStaticMeasurement	8	static
-../Core/Src/FSMGonio.c:235:6:dispatchCalibration	8	static
+../Core/Src/FSMGonio.c:114:6:dispatchTestRotation	8	static
+../Core/Src/FSMGonio.c:148:6:dispatchDynamicMeasurement	8	static
+../Core/Src/FSMGonio.c:208:6:dispatchStaticMeasurement	8	static
+../Core/Src/FSMGonio.c:240:6:dispatchCalibration	8	static

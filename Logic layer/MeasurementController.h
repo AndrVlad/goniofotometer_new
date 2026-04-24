@@ -37,7 +37,5 @@ void setActivePlatform(uint8_t platf_id);
 bool isPlatformReachStartPosition();
 bool isPlatformReachEndPosition();
 bool isPlatformReachTestPosition();
-void stopDynamicMeasurement();
-void stopStaticMeasurement();
 
 #endif

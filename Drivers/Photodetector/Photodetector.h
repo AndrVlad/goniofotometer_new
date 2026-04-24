@@ -12,7 +12,7 @@
 #include <stdbool.h>
 
 void pollPhotodetector();
-void sendDataPD(uint8_t data);
+void sendDataPD(uint8_t* data);
 uint8_t* getPDData();
 
 #endif /* PHOTODETECTOR_PHOTODETECTOR_H_ */

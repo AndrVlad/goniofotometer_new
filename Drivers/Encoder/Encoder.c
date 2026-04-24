@@ -47,7 +47,7 @@ void setEncoderPollFrequency(uint16_t poll_freq) {
 void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)
 {
 	encoder_val = 0;
-	// first encoder
+	// энкодер горизонтальной платформы
 	if (hspi->Instance == SPI4) {
 		encoder_val =  (dma_spi4_buf[2] >> 5) & 0x07;
 		encoder_val |=  ((uint32_t)dma_spi4_buf[1] << 3);
@@ -56,7 +56,7 @@ void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)
 		h_encoder.inv_value = ENCODER_RESOLUTION - encoder_val;
 	}
 
-	// second encoder
+	// энкодер вертикальной платформы
 	if (hspi->Instance == SPI3) {
 		encoder_val  =  (dma_spi3_buf[2] >> 5) & 0x07;
 		encoder_val |=  ((uint32_t)dma_spi3_buf[1] << 3);

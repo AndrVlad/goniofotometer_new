@@ -14,8 +14,8 @@
 #define ENCODER_RESOLUTION 131071
 
 typedef struct  {
-	uint32_t cur_value;
-	uint32_t inv_value;
+	uint32_t cur_value; // текущее значение энкодера
+	uint32_t inv_value;	// инвертированное значение энкодера
 } encoder_t;
 
 extern encoder_t h_encoder, v_encoder;
