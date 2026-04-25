@@ -23,9 +23,11 @@
 #define ADC_CRC_ERROR				0x02
 
 bool isADCDataAvailable();
+bool isErrorOccured();
 void parserCMD();
 void setError(uint8_t error_code);
 void saveOffsetData(uint32_t);
+void saveOffsetCalibrationData(uint32_t offset);
 void savePhotodetectorData();
 void resetProtocolModule();
 

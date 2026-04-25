@@ -10,7 +10,13 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "Common.h"
 #include "stm32f7xx_hal.h"
+
+#define PICK_UP_MOTOR_FREQUENCY_HZ 	5
+#define MOTOR_FREQUENCY_STEP_HZ 	15
+#define ACCELERATION_TIME_SEC		3
+#define DECELERATION_STEP_HZ		50
 
 enum dir_t {
 	FORWARD,
@@ -21,7 +27,7 @@ typedef struct {
 	enum dir_t direction;
 	uint16_t cur_frequency;
 	uint16_t target_frequency;
-	TIM_HandleTypeDef timer;
+	TIM_HandleTypeDef* timer;
 } motor_t;
 
 void accelerateMotor(motor_t* motor);

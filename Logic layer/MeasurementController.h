@@ -33,6 +33,7 @@ void handleStaticMeasurement();
 void initStaticMeasurement(uint8_t interval, uint8_t resolution);
 void initTestRotation(uint8_t lsb_angle, uint8_t msb_angle, uint8_t type);
 void handleTestRotation();
+void stopMeasurement();
 void setActivePlatform(uint8_t platf_id);
 bool isPlatformReachStartPosition();
 bool isPlatformReachEndPosition();

@@ -172,6 +172,7 @@ void dispatchDynamicMeasurement() {
 
 		if (isPlatformReachEndPosition()) {
 			setFSMActionState(DECELERATION);
+			deceleratePlatform();
 		}
 
 		handleDynamicMeasurement();
@@ -210,6 +211,7 @@ void dispatchStaticMeasurement() {
 	switch(curActionState) {
 	case POLL_PD:
 		if (tim14_ovflw) {
+			tim14_ovflw = 0;
 			pollPD();
 		}
 
@@ -219,6 +221,7 @@ void dispatchStaticMeasurement() {
 		}
 
 		if (tim5_ovflw) {
+			tim5_ovflw = 0;
 			setFSMActionState(WAITING);
 		}
 		break;
@@ -253,7 +256,8 @@ void dispatchCalibration() {
 	case ACCUMULATION_PD_DATA:
 
 		if(tim10_ovflw) {
-			pollPhotodetector();
+			tim10_ovflw = 0;
+			pollPD();
 		}
 
 		if (uart1_rx_complete) {

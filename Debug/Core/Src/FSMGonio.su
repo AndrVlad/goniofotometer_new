@@ -6,5 +6,5 @@
 ../Core/Src/FSMGonio.c:39:6:dispatchFSMGlobal	8	static
 ../Core/Src/FSMGonio.c:114:6:dispatchTestRotation	8	static
 ../Core/Src/FSMGonio.c:148:6:dispatchDynamicMeasurement	8	static
-../Core/Src/FSMGonio.c:208:6:dispatchStaticMeasurement	8	static
-../Core/Src/FSMGonio.c:240:6:dispatchCalibration	8	static
+../Core/Src/FSMGonio.c:209:6:dispatchStaticMeasurement	8	static
+../Core/Src/FSMGonio.c:243:6:dispatchCalibration	8	static
