@@ -26,7 +26,6 @@ void accelerateMotor(motor_t* motor) {
 	 }
 }
 
-
 void decelerateMotor(motor_t* motor) {
 
 	tim12_ovflw = false;
@@ -87,10 +86,13 @@ void startMotorRotation(motor_t* motor) {
 
 	// установка частоты, равной частоте приемистости
 	setMotorFrequency(motor,PICK_UP_MOTOR_FREQUENCY_HZ);
-	// установка частоты
+	// установка частоты таймера, выполняющего увеличение частоты ШД для разгона
 	setPeriodAccelTimer(motor,motor->target_frequency);
+	// включение таймера для опроса энкодеров
 	startPollingEncoderTimer();
+	// включение таймера формирования импульса шага
 	startTimer(motor->timer);
+	// включение таймера для вызова функции увеличения частоты ШД
 	startTimer(&htim4);
 	return;
 }
