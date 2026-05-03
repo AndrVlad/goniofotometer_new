@@ -1,2 +1,3 @@
-PC_Communication.c:12:10:getPCCommand	1
-PC_Communication.c:16:6:sendAnswerToPC	1
+PC_Communication.c:6:6:PCCommInit	1
+PC_Communication.c:11:10:getPCCommand	1
+PC_Communication.c:15:6:sendAnswerToPC	1

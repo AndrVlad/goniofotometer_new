@@ -30,5 +30,6 @@ void saveOffsetData(uint32_t);
 void saveOffsetCalibrationData(uint32_t offset);
 void savePhotodetectorData();
 void resetProtocolModule();
+void initProtocolModule();
 
 #endif

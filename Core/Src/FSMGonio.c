@@ -5,6 +5,7 @@
 #include "Platform.h"
 #include "PhotodetectorController.h"
 
+void initFSMGonio();
 void dispatchDynamicMeasurement();
 void dispatchStaticMeasurement();
 void dispatchCalibration();
@@ -12,6 +13,12 @@ void dispatchTestRotation();
 
 enum FSMGlobalState curStateGlobal = INIT_STATE;
 enum FSMActionState curActionState = NONE_ACTION;
+
+void initFSMGonio() {
+	initPlatforms();
+	resetProtocolModule();
+	setFSMGlobalState(IDLE_STATE);
+}
 
 uint8_t getFSMActionState() {
 	return curActionState;

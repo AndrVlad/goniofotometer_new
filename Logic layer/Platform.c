@@ -4,6 +4,10 @@ platform_t horizontal, vertical;
 platform_t* current_platform = &horizontal;
 
 void initPlatforms() {
+	horizontal.motor = &h_motor;
+	horizontal.encoder = &h_encoder;
+	vertical.motor = &v_motor;
+	vertical.encoder = &v_encoder;
 	return;
 }
 
@@ -74,6 +78,23 @@ void setSpecifiedPlatformSpeed(uint32_t frequency_hz) {
 };
 
 void setPlatformDirection(uint32_t target_position) {
+
+	uint32_t current_enc_val = current_platform->encoder->cur_value;
+
+	if (target_position < current_enc_val) {
+		if ((current_enc_val - target_position) > (ENCODER_RESOLUTION - current_enc_val + target_position)) {
+			setMotorDirection(current_platform->motor, FORWARD);
+		} else {
+			setMotorDirection(current_platform->motor, BACKWARD);
+		}
+	} else {
+		if ((ENCODER_RESOLUTION - target_position + current_enc_val) < (target_position - current_enc_val)) {
+			setMotorDirection(current_platform->motor, BACKWARD);
+		} else {
+			setMotorDirection(current_platform->motor, FORWARD);
+		}
+	}
+
 	return;
 };
 void startPlatformRotation() {
@@ -114,9 +135,9 @@ uint32_t getOffsetPosition(uint8_t platform_num) {
 
 uint32_t getInvertedEncoderVal(uint8_t encoder_num) {
 	if (encoder_num) {
-		return getInvVal(horizontal.encoder);
+		return getInvVal(encoder_num);
 	} else {
-		return getInvVal(vertical.encoder);
+		return getInvVal(encoder_num);
 	}
 }
 

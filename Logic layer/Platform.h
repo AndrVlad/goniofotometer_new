@@ -24,6 +24,7 @@ void invertPlatformDirection();
 void startPlatformRotation();
 void stopPlatform();
 void stopPlatforms();
+void initPlatforms();
 
 bool isPlatformStopped();
 bool isPlatformAccelerated();

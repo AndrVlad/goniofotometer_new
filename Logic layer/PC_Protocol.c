@@ -53,6 +53,8 @@ void resetProtocolModule() {
 	clearRingBuf();
 	cur_action = NONE_ACTION;
 	work_status = READY_STATUS;
+	PCCommInit();
+	startKeepAliveTimer();
 };
 
 bool isErrorOccured() {
@@ -313,6 +315,9 @@ void parserCMD() {
 	case EMERGENCY_STOP:
 		sendResponseOnCMD(EMERGENCY_STOP, CMD_ACCEPTED);
 		resetProtocolModule();
+		stopMeasurement();
+		setFSMGlobalState(IDLE_STATE);
+		setFSMActionState(NONE_ACTION);
 		break;
 	case GET_ADC_DATA:
 		sendDataPacket();
